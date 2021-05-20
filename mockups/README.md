@@ -1,1 +1,1 @@
-![](https://github.com/virejdasani/Cadbury/mockups/BaseLayout.png)
+![](https://github.com/virejdasani/Cadbury/blob/master/mockups/BaseLayout.png>raw=true)
