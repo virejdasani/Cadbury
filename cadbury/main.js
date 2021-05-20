@@ -41,8 +41,8 @@ const createTray = () => {
 
 const createWindow = () => {
     window = new BrowserWindow({
-        width: 350,
-        height: 240,
+        width: 427,
+        height: 53,
         show: false,
         frame: false,
         fullscreenable: false,
@@ -58,7 +58,7 @@ const createWindow = () => {
     window.loadURL(`file://${path.join(__dirname, 'index.html')}`)
 
     // This is a global shortcut to activate Cadbury with hotkey(s)
-    globalShortcut.register('Control+e', () => {
+    globalShortcut.register('Control+Space', () => {
         if (window.isVisible()) {
             hideWindow()
         } else {
