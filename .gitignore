@@ -1,0 +1,4 @@
+cadbury/node_modules
+
+# Don't add .DS_Store from any directory
+**/.DS_Store
