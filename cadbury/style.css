@@ -12,6 +12,7 @@ body {
     padding: 5px;
     animation: none;
     /* padding-top: 10px; */
+    overflow-y: hidden;
 }
 
 .main__window {
@@ -22,6 +23,7 @@ body {
     /* background-color: rgb(29, 29, 29); */
     border-radius: 10px;
     border: none;
+    overflow: hidden;
 }
 
 @keyframes easier {
@@ -39,7 +41,7 @@ body {
 input {
     display: block;
     margin: auto;
-    width: 95%;
+    width: 90%;
     min-width: 100%;
     background-color: rgba(47, 47, 47, 0.952);
     border-radius: 10px;
@@ -71,6 +73,8 @@ input {
     box-shadow: 4px 4px 4px rgb(45, 45, 45);
     padding-bottom: 30px;
     animation: easier 0.5s;
+    max-height: 350px;
+    overflow-y: scroll !important;
 }
 
 hr {
@@ -103,6 +107,8 @@ hr {
 .quick__results {
     margin-bottom: 30px;
     padding-bottom: 30px;
+    max-height: 200px;
+    overflow-y: scroll !important;
 }
 
 .titlebar {
@@ -186,5 +192,16 @@ hr {
 
 /* Hide scrollbars */
 ::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
+}
+
+::-webkit-scrollbar {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(81, 81, 81);
+    border: 5px solid transparent;
+    border-radius: 9px;
+    background-clip: content-box;
 }

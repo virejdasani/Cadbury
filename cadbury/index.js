@@ -1,3 +1,4 @@
+
 const cadbury = document.querySelector("#searchbox");
 const resultsDiv = document.getElementsByClassName("results")[0];
 const browserResults = document.getElementsByClassName("browser__results")[0];
@@ -6,15 +7,20 @@ const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
 resultsDiv.style.display = "none";
 
 cadbury.addEventListener("keyup", (e) => {
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cadbury.value}`, {
-        headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+
+    Object.keys(definitions).map((key, index) => {
+        console.log(key);
+
+        // Either use if includes 
+        // if (key.includes(cadbury.value)) {
+        //     focusDictionary(key, definitions[key])
+        // }
+
+        // Or use if === value
+        if (key == cadbury.value) {
+            focusDictionary(key, definitions[key])
         }
-    })
-    .then((response) => {
-        return response.json();
-    }).then(focusDictionary);
+    });
 
     if (cadbury.value == "" || cadbury.length == 1) {
         quickMeanings.innerHTML = "";
@@ -29,8 +35,7 @@ cadbury.addEventListener("keyup", (e) => {
     }).then(focusBrowser);
 });
 
-function focusDictionary(data) {
-    if (data.length == 0) {
+function focusDictionary(key, definition) {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML = 
         `
@@ -38,19 +43,17 @@ function focusDictionary(data) {
             <span>No Results Found</span>
         </li>
         `
-    } else {
-        let term = data[0].word;
-        console.log(data);
-        let meaning = data[0].meanings[0].definitions[0].definition;
-        resultsDiv.style.display = "block";
+        // let term = data[0].word;
+        // console.log(data);
+        // let meaning = data[0].meanings[0].definitions[0].definition;
+        // resultsDiv.style.display = "block";
         quickMeanings.innerHTML = 
         `
         <li>
-            <h3 class="term">"${term}"</h3>
-            <span class="meaning">${meaning}</span>
+            <h3 class="term">"${key}"</h3>
+            <span class="meaning">${definition}</span>
         </li>
-        `
-    }
+        `;
 }
 
 function focusBrowser(data) {
