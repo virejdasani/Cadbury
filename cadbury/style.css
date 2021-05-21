@@ -183,3 +183,8 @@ hr {
     margin: auto;
     width: 60px;
 }
+
+/* Hide scrollbars */
+::-webkit-scrollbar {
+    display: none;
+}
