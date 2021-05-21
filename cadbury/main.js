@@ -3,8 +3,7 @@ const {
     BrowserWindow,
     Tray,
     globalShortcut,
-    Menu,
-    electron
+    Menu
 } = require('electron')
 
 // This is the npm package `open`, it is used here to open all links in an external browser
