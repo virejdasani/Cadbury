@@ -41,12 +41,10 @@ const createTray = () => {
 
 const createWindow = () => {
     window = new BrowserWindow({
-        width: 427,
-        height: 53,
-        show: false,
+        width: 1000,
+        height: 600,
+        transparent: true,
         frame: false,
-        fullscreenable: false,
-        resizable: false,
         webPreferences: {
             // Prevents renderer process code from not running when window is
             backgroundThrottling: false,
