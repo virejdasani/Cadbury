@@ -1,85 +1,66 @@
-const {
-    app,
-    BrowserWindow,
-    Tray,
-    globalShortcut,
-    Menu
-} = require('electron')
-
-// This is the npm package `open`, it is used here to open all links in an external browser
-const open = require('open')
-
-const path = require('path')
-
+const { app, BrowserWindow, globalShortcut, Tray, systemPreferences } = require("electron");
+const open = require("open");
+const { platform } = require("os");
+const path = require("path");
 const assetsDirectory = path.join(__dirname, 'assets')
 
-let tray = undefined
-let window = undefined
+let window;
+let tray;
 
-// Hide the menu and dev tools
-// Menu.setApplicationMenu(null)
+app.on("ready", () => {
+    initializeApp();
+    initializeTray();
+});
 
-app.on('ready', () => {
-    createTray()
-    createWindow()
-})
-
-// Quit the app when the window is closed
 app.on('window-all-closed', () => {
     app.quit()
-})
+});
 
-const createTray = () => {
-    tray = new Tray(path.join(assetsDirectory, 'trayIcons/sunTemplate.png'))
-    tray.on('right-click', toggleWindow)
-    tray.on('double-click', toggleWindow)
+const initializeTray = () => {
+    tray = new Tray(path.join(assetsDirectory, 'tray_icon.png'))
+    tray.on('right-click', toggleCadburyVisibility)
+    tray.on('double-click', toggleCadburyVisibility)
     tray.on('click', function (event) {
-        toggleWindow()
-    })
+        toggleCadburyVisibility()
+    });
 }
 
-const createWindow = () => {
+const initializeApp = () => {
     window = new BrowserWindow({
-        width: 1000,
-        height: 600,
+        height: 500,
+        width: 700,
         transparent: true,
+        thickFrame: false,
+        hasShadow: true,
+        alwaysOnTop: true,
         frame: false,
         webPreferences: {
-            // Prevents renderer process code from not running when window is
+            nodeIntegration: true,
             backgroundThrottling: false,
-            nodeIntegration: true
+            devTools: true,
         }
-    })
+    });
 
-    // Load index.html
-    window.loadURL(`file://${path.join(__dirname, 'index.html')}`)
+    window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
 
-    // This is a global shortcut to activate Cadbury with hotkey(s)
-    globalShortcut.register('Control+Space', () => {
-        if (window.isVisible()) {
-            hideWindow()
-        } else {
-            showWindow()
-        }
-    })
+    globalShortcut.register("Control + Space", () => {
+        toggleCadburyVisibility();
+    });
 
-    // If 'esc' is pressed, hide the app window
     window.webContents.on('before-input-event', (event, input) => {
         if (input.key === "Escape") {
-            hideWindow()
+            destroyCadbury()
             // event.preventDefault()
         }
     })
 
-    // This opens all links with `target="_blank"` in external browser
+    window.on("blur", () => {
+        destroyCadbury();
+    });
+
     window.webContents.on('new-window', function (event, url) {
         event.preventDefault()
-        open(url)
-    })
-
-    // Hide the window when it loses focus
-    window.on('blur', () => {
-        hideWindow()
+        open(url);
     })
 
     if (process.platform == 'darwin') {
@@ -91,29 +72,28 @@ const createWindow = () => {
     }
 }
 
-const toggleWindow = () => {
+const toggleCadburyVisibility = () => {
     if (window.isVisible()) {
-        hideWindow()
+        destroyCadbury()
     } else {
-        showWindow()
+        launchCadbury();
     }
 }
 
-const showWindow = () => {
-    window.show()
-    // Reload so the results from the previous session don't show
-    window.reload()
+const launchCadbury = () => {
+    window.reload();
+    window.setSize(680, 400);
+    setTimeout(() => {
+        window.show();
+    }, 150)
 }
 
-const hideWindow = () => {
-    // This is required because app.hide() is not defined in windows and linux
-    if (process.platform == 'darwin') {
-        // Both of these are needed because they help restore focus back to the previous window
-        app.hide()
-        window.hide()
+const destroyCadbury = () => {
+    if (process.platform == "darwin") {
+        app.hide();
+        window.hide();
     } else {
-        // Both of these are needed because they help restore focus back to the previous window
-        window.minimize()
-        window.hide()
+        window.minimize();
+        window.hide();
     }
 }

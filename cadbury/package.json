@@ -1,31 +1,16 @@
 {
-    "name": "cadbury",
-    "version": "1.0.0",
-    "description": "A cross-platform, open-source spotlight search",
-    "main": "main.js",
-    "scripts": {
-        "start": "electron .",
-        "pack-darwin-x64": "electron-packager . 'Cadbury' --platform=darwin --arch=x64 --icon=assets/AppIcons/icon.icns",
-        "pack-win32-x64": "electron-packager . 'Cadbury' --platform=win32 --arch=x64 --icon=assets/AppIcons/icon.ico",
-        "pack-linux-x64": "electron-packager . 'Cadbury' --platform=linux --arch=x64 --icon=assets/AppIcons/icon.png"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/virejdasani/Cadbury.git"
-    },
-    "keywords": [
-        "cadbury",
-        "spotlight",
-        "search"
-    ],
-    "author": "Virej Dasani, Arnav Jain",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/virejdasani/Cadbury/issues"
-    },
-    "homepage": "https://github.com/virejdasani/Cadbury#readme",
-    "dependencies": {
-        "electron": "^12.0.9",
-        "open": "^8.0.9"
-    }
+  "name": "cadbury3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^12.0.9",
+    "open": "^8.0.9"
+  }
 }
