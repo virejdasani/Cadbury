@@ -24,13 +24,17 @@ cadbury.addEventListener("keyup", (e) => {
         quickMeanings.innerHTML = "";
         browserResults.innerHTML = "";
         resultsDiv.style.display = "none";
-    } else if (cadbury.value == "weather" || cadbury.value == "WEATHER" || cadbury.value == "Weather" || cadbury.value == "wEATHER") {
-        getWeather();
-    } else {
+    } 
+
+    if (!navigator.onLine) {
         browserResults.innerHTML = 
         `
-        <span class="error">No broswer results found for the term "${cadbury.value}"</span>
+        <span class="error">You are not connected to the internet</span>
         `
+    }
+    
+    if (cadbury.value == "weather" || cadbury.value == "WEATHER" || cadbury.value == "Weather" || cadbury.value == "wEATHER") {
+        getWeather();
     }
 });
 
@@ -56,31 +60,39 @@ function focusDictionary(key, definition) {
 }
 
 function focusBrowser(data) {
-    browserResults.innerHTML =
-    `
-    <img class="loader" src="./assets/loading_spinner.gif">
-    `;
+    console.log(navigator.onLine);
+    if (!navigator.onLine) {
+        browserResults.innerHTML = 
+        `
+        <span class="error">You are not connected to the internet</span>
+        `
+    } else {
+        browserResults.innerHTML =
+        `
+        <img class="loader" src="./assets/loading_spinner.gif">
+        `;
 
-    setTimeout(() => {
-        if (!data) {
-            browserResults.innerHTML =
-            `
-            <span class="error">There was a problem loading browser results</span>
-            `;
-        }
-    }, 3000);
+        setTimeout(() => {
+            if (!data || data === undefined || data === null || data === "") {
+                browserResults.innerHTML =
+                `
+                <span class="error">There was a problem loading browser results</span>
+                `;
+            }
+        }, 3000);
 
-    browserResults.innerHTML = 
-    `
-    <div class="weather_results">
-        <img src="${data.icon}" class="weather_icon">
-        <div class="weather_info">
-            <h2>${data.city}, ${data.country}</h2>
-            <h3>${data.temperature}</h3>
-            <h3>${data.description}</h3>
+        browserResults.innerHTML = 
+        `
+        <div class="weather_results">
+            <img src="${data.icon}" class="weather_icon">
+            <div class="weather_info">
+                <h2>${data.city}, ${data.country}</h2>
+                <h3>${data.temperature}</h3>
+                <h3>${data.description}</h3>
+            </div>
         </div>
-    </div>
-    `
+        `
+    }
 }
 
 function getWeather() {
@@ -89,11 +101,6 @@ function getWeather() {
         .then((res) => {
             return res.json();
         }).then(focusWeather);
-    } else {
-        browserResults.innerHTML =
-        `
-        <span class="error">You are not connected to the internet</span>
-        `
     }
 }
 
