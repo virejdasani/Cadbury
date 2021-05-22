@@ -190,11 +190,6 @@ hr {
     width: 60px;
 }
 
-/* Hide scrollbars */
-::-webkit-scrollbar {
-    /* display: none; */
-}
-
 ::-webkit-scrollbar {
     background-color: transparent;
 }
@@ -204,4 +199,16 @@ hr {
     border: 5px solid transparent;
     border-radius: 9px;
     background-clip: content-box;
+}
+
+a:link {
+    color: rgb(0, 187, 255);
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: rgb(0, 187, 255);
+    background-color: transparent;
+    text-decoration: none;
 }

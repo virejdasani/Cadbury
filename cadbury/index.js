@@ -1,4 +1,3 @@
-
 const cadbury = document.querySelector("#searchbox");
 const resultsDiv = document.getElementsByClassName("results")[0];
 const browserResults = document.getElementsByClassName("browser__results")[0];
@@ -7,14 +6,13 @@ const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
 resultsDiv.style.display = "none";
 
 cadbury.addEventListener("keyup", (e) => {
-
     Object.keys(definitions).map((key, index) => {
-        console.log(key);
-
         // Either use if includes 
         // if (key.includes(cadbury.value)) {
         //     focusDictionary(key, definitions[key])
         // }
+
+        // Another free dictionary API: https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
 
         // Or use if === value
         if (key == cadbury.value) {
@@ -29,25 +27,25 @@ cadbury.addEventListener("keyup", (e) => {
     }
 
     // Search Browser
-    fetch(`http://api.serpstack.com/search?access_key=ca8de4c4392bbc1b28156c16c8f76ef0&query=${cadbury.value}`)
-    .then((response) => {
-        return response.json();
-    }).then(focusBrowser);
+    fetch(`http://api.serpstack.com/search?access_key=${SerpAPIKey}&query=${cadbury.value}`)
+        .then((response) => {
+            return response.json();
+        }).then(focusBrowser);
 });
 
 function focusDictionary(key, definition) {
-        resultsDiv.style.display = "block";
-        quickMeanings.innerHTML = 
+    resultsDiv.style.display = "block";
+    quickMeanings.innerHTML =
         `
         <li>
             <span>No Results Found</span>
         </li>
         `
-        // let term = data[0].word;
-        // console.log(data);
-        // let meaning = data[0].meanings[0].definitions[0].definition;
-        // resultsDiv.style.display = "block";
-        quickMeanings.innerHTML = 
+    // let term = data[0].word;
+    // console.log(data);
+    // let meaning = data[0].meanings[0].definitions[0].definition;
+    // resultsDiv.style.display = "block";
+    quickMeanings.innerHTML =
         `
         <li>
             <h3 class="term">"${key}"</h3>
@@ -60,15 +58,15 @@ function focusBrowser(data) {
     // console.log(data);
     // let pages = data.query.pages;
 
-    browserResults.innerHTML = 
-    `
+    browserResults.innerHTML =
+        `
     <img class="loader" src="./assets/loading_spinner.gif">
     `
 
     setTimeout(() => {
         if (data.success == false) {
-            browserResults.innerHTML = 
-            `
+            browserResults.innerHTML =
+                `
             <span class="error">There was a problem loading browser results</span>
             `
         }
@@ -94,8 +92,8 @@ function focusBrowser(data) {
     };
     console.log(article1);
 
-    browserResults.innerHTML = 
-    `
+    browserResults.innerHTML =
+        `
     <li class="search_result_li">
         <div class="search_result_div">
         <h3>${article1.title}</h3>
