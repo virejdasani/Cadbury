@@ -27,10 +27,10 @@ cadbury.addEventListener("keyup", (e) => {
     }
 
     // Search Browser
-    fetch(`http://api.serpstack.com/search?access_key=${SerpAPIKey}&query=${cadbury.value}`)
+    fetch(`http://api.serpstack.com/search?access_key=ca8de4c4392bbc1b28156c16c8f76ef0&query=${cadbury.value}`)
         .then((response) => {
             return response.json();
-        }).then(focusBrowser);
+    }).then(focusBrowser);
 });
 
 function focusDictionary(key, definition) {
@@ -55,7 +55,7 @@ function focusDictionary(key, definition) {
 }
 
 function focusBrowser(data) {
-    // console.log(data);
+    console.log(data);
     // let pages = data.query.pages;
 
     browserResults.innerHTML =
