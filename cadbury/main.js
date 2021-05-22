@@ -33,6 +33,7 @@ const initializeApp = () => {
         thickFrame: false,
         hasShadow: true,
         alwaysOnTop: true,
+        fullscreenable: false,
         frame: false,
         webPreferences: {
             nodeIntegration: true,
@@ -82,7 +83,7 @@ const toggleCadburyVisibility = () => {
 
 const launchCadbury = () => {
     window.reload();
-    window.setSize(680, 400);
+    window.setSize(700, 500);
     setTimeout(() => {
         window.show();
     }, 150)

@@ -24,13 +24,14 @@ cadbury.addEventListener("keyup", (e) => {
         quickMeanings.innerHTML = "";
         browserResults.innerHTML = "";
         resultsDiv.style.display = "none";
+    } else if (cadbury.value == "weather" || cadbury.value == "WEATHER" || cadbury.value == "Weather" || cadbury.value == "wEATHER") {
+        getWeather();
+    } else {
+        browserResults.innerHTML = 
+        `
+        <span class="error">No broswer results found for the term "${cadbury.value}"</span>
+        `
     }
-
-    // Search Browser
-    fetch(`http://api.serpstack.com/search?access_key=ca8de4c4392bbc1b28156c16c8f76ef0&query=${cadbury.value}`)
-        .then((response) => {
-            return response.json();
-    }).then(focusBrowser);
 });
 
 function focusDictionary(key, definition) {
@@ -55,62 +56,59 @@ function focusDictionary(key, definition) {
 }
 
 function focusBrowser(data) {
-    console.log(data);
-    // let pages = data.query.pages;
-
     browserResults.innerHTML =
-        `
-    <img class="loader" src="./assets/loading_spinner.gif">
     `
+    <img class="loader" src="./assets/loading_spinner.gif">
+    `;
 
     setTimeout(() => {
-        if (data.success == false) {
+        if (!data) {
             browserResults.innerHTML =
-                `
-            <span class="error">There was a problem loading browser results</span>
             `
+            <span class="error">There was a problem loading browser results</span>
+            `;
         }
     }, 3000);
 
-    let article1 = {
-        imageURL: data.inline_images[0].image_url,
-        title: data.organic_results[0].title,
-        url: data.organic_results[0].url,
-        snippet: data.organic_results[0].snippet,
-    };
-    let article2 = {
-        imageURL: data.inline_images[1].image_url,
-        title: data.organic_results[1].title,
-        url: data.organic_results[1].url,
-        snippet: data.organic_results[1].snippet,
-    };
-    let article3 = {
-        imageURL: data.inline_images[2].image_url,
-        title: data.organic_results[2].title,
-        url: data.organic_results[2].url,
-        snippet: data.organic_results[2].snippet,
-    };
-    console.log(article1);
-
-    browserResults.innerHTML =
-        `
-    <li class="search_result_li">
-        <div class="search_result_div">
-        <h3>${article1.title}</h3>
-        <p>${article1.snippet}</p>
-        </div>
-    </li>
-    <li class="search_result_li">
-        <div class="search_result_div">
-        <h3>${article2.title}</h3>
-        <p>${article2.snippet}</p>
-        </div>
-    </li>
-    <li class="search_result_li">
-        <div class="search_result_div">
-        <h3>${article3.title}</h3>
-        <p>${article3.snippet}</p>
-        </div>
-    </li>
+    browserResults.innerHTML = 
     `
+    <div class="weather_results">
+        <img src="${data.icon}" class="weather_icon">
+        <div class="weather_info">
+            <h2>${data.city}, ${data.country}</h2>
+            <h3>${data.temperature}</h3>
+            <h3>${data.description}</h3>
+        </div>
+    </div>
+    `
+}
+
+function getWeather() {
+    if (navigator.onLine) {
+        fetch(`http://api.openweathermap.org/data/2.5/weather?lat=46.6863&lon=7.8632&appid=ecbd8d55ed62141fd514798906526fe0`)
+        .then((res) => {
+            return res.json();
+        }).then(focusWeather);
+    } else {
+        browserResults.innerHTML =
+        `
+        <span class="error">You are not connected to the internet</span>
+        `
+    }
+}
+
+function focusWeather(data) {
+    let main = data.main;
+    let weather = data.weather;
+
+    let weatherDictionary = {
+        country: data.sys.country,
+        city: data.name,
+        temperature: `Feels Like ${main.temp.toFixed(0) - 273}°C`,
+        humidity: main.humidity,
+        description: weather[0].main,
+        icon: `http://openweathermap.org/img/wn/${weather[0].icon}@4x.png`
+    }
+
+    focusBrowser(weatherDictionary);
 }
