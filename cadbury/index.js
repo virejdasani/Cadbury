@@ -189,6 +189,7 @@ function focusBrowser(data, numeric) {
         focusDictionary(null, null);
     };
 }
+}
 
 function getWeather() {
     fetch('http://ip-api.com/json/')
@@ -230,5 +231,4 @@ function getLocation(data) {
     }).then((res) => {
         focusWeather(res, location.country, location.success);
     });
-}
 }
