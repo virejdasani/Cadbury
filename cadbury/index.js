@@ -6,6 +6,10 @@ const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
 resultsDiv.style.display = "none";
 
 cadbury.addEventListener("keyup", (e) => {
+    if (e.code === "Enter") {
+        enterPressed()
+    }
+
     Object.keys(definitions).map((key, index) => {
         // Either use if includes 
         // if (key.includes(cadbury.value)) {
@@ -49,7 +53,7 @@ cadbury.addEventListener("keyup", (e) => {
         }).then(focusBrowser)
     }
 
-    let commandKey = ":"
+    const commandKey = ":"
     // If the command key is pressed
     if (cadbury.value[0] == commandKey) {
         // This gets the first word of the input without the commandKey
@@ -57,8 +61,10 @@ cadbury.addEventListener("keyup", (e) => {
         let cmd = command.split(" ")[0]
         // This gets the value after the commandKey + command + the space character after the command
         let value = cadbury.value.slice(cmd.length+2)
+
         // Pass it into focusCommand
         focusCommand(cmd, value)
+        
     }
 
     let mathCodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "*", "/", "-", "+", "(", ")", "[", "]", "%"];
@@ -247,9 +253,6 @@ function getLocation(data) {
 }
 
 function focusCommand(command, value) {
-    console.log(command)
-    console.log(value)
-
     if (command == "google" || command == "search") {
         browserResults.innerHTML =
             `
@@ -258,19 +261,28 @@ function focusCommand(command, value) {
         resultsDiv.style.display = "block"
         browserResults.style.display = "block"
         focusDictionary(null, null);
-
-
-        document.addEventListener("keyup", (e) => {
-            if (e.code === 'Enter') {
-                google(value)
-            }
-        })
     }
 }
 
-function google() {
-    alert()
-
+function google(value) {
+    // alert()
     // This will google the value
-    // window.open("https://www.google.com/search?q=${value}", "_blank");
+    window.open("https://www.google.com/search?q="+value, "_blank");
+}
+
+function enterPressed() {
+    // Check if there is a command
+    if (cadbury.value[0] == ":") {
+        // If there is a command, get the respective substrings into cmd and value
+        // This gets the first word of the input without the commandKey
+        let command = cadbury.value.slice(1)
+        let cmd = command.split(" ")[0]
+        // This gets the value after the commandKey + command + the space character after the command
+        let value = cadbury.value.slice(cmd.length + 2)
+
+        // If the cmd is google or search, google the value
+        if (cmd == "google" || cmd == "search") {
+            google(value)
+        }
+    }
 }
