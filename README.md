@@ -6,4 +6,4 @@
  - Perform calculations
  - Have access to the `quick news feed` and `weather` widgets 
 
-#### Find out more about this product on <a href="https://unruffled-pare-ee4f0a.netlify.app/">the website</a>
+#### Find Out More About This Product On <a href="https://unruffled-pare-ee4f0a.netlify.app/">The Website</a>
