@@ -1,7 +1,6 @@
 # Cadbury
-- A cross-platform, open-source spotlight search
-- This project is still under development
+### The Game Changer
 
-## Cadbury is mantained by
-- [Arnav Jain](https://github.com/arnavjainn06)
-- [Virej Dasani](https://github.com/virejdasani)
+> The ultimate quick search tool
+
+#### Find out more about this product on <a href="https://unruffled-pare-ee4f0a.netlify.app/">the website</a>
