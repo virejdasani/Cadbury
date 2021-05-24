@@ -22,7 +22,7 @@ cadbury.addEventListener("keyup", (e) => {
 
     browserResults.innerHTML = 
     `
-    <span class="error">No borwser results found for "${cadbury.value}"</span>
+    <span class="error">No results found for "${cadbury.value}"</span>
     `
 
     if (cadbury.value == "") {
@@ -48,11 +48,34 @@ cadbury.addEventListener("keyup", (e) => {
             return res.json();
         }).then(focusBrowser)
     }
+
+    let mathCodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "*", "/", "-", "+"];
+
+    mathCodes.map((code) => {
+        if (cadbury.value.includes(code)) {
+            console.log("number found");
+            try {
+                let expressionAnswer = eval(cadbury.value);
+                focusBrowser(expressionAnswer, numeric = true);
+            } catch (err) {
+                console.log("not a number...");
+            }
+        }
+    });
 });
 
 function focusDictionary(key, definition) {
-    resultsDiv.style.display = "block";
-    quickMeanings.innerHTML =
+    if (key == null || definition == null) {
+        resultsDiv.style.display = "block";
+        quickMeanings.innerHTML =
+        `
+        <li>
+            <span class="no-def-error">No Results Found</span>
+        </li>
+        `
+    } else {
+        resultsDiv.style.display = "block";
+        quickMeanings.innerHTML =
         `
         <li>
             <span>No Results Found</span>
@@ -69,9 +92,13 @@ function focusDictionary(key, definition) {
             <span class="meaning">${definition}</span>
         </li>
         `;
+    }
 }
 
-function focusBrowser(data) {
+function focusBrowser(data, numeric) {
+
+    console.log(numeric);
+
     if (!navigator.onLine) {
         browserResults.innerHTML = 
         `
@@ -79,19 +106,13 @@ function focusBrowser(data) {
         `
     } else {
         if (cadbury.value == "weather") {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                console.log(position.coords.latitude, position.coords.longitude);
-            }, (err) => {
-                console.log(err);
-            });
-
             browserResults.innerHTML =
             `
             <img class="loader" src="./assets/loading_spinner.gif">
             `;
 
             setTimeout(() => {
-                if (!data) {
+                if (!data.success) {
                     browserResults.innerHTML =
                     `
                     <span class="error">No results found for "${cadbury.value}"</span>
@@ -155,43 +176,59 @@ function focusBrowser(data) {
                 <span>${article3.title} • ${article3.section}</span>
             </a>
             `;
-
-            cadbury.addEventListener("keypress", (e) => {
-                if (e.keyCode == 40) {
-                    console.log('ttatatata');
-                }
-            })
         }
     }
+
+    if (numeric) {
+        browserResults.innerHTML = 
+        `
+        <span class="error eval_err">${cadbury.value} = ${data}</span>
+        `;
+        console.log(browserResults);
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+    };
 }
 
 function getWeather() {
-
-    // navigator.geolocation.getCurrentPosition((pos) => {
-    //     console.log(pos.coords.latitude);
-    //     console.log(pos.coords.longitude);
-    // }, (err) => {
-    //     console.log(err);
-    // });
-
-    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=46.6863&lon=7.8632&appid=ecbd8d55ed62141fd514798906526fe0`)
-    .then((res) => {
-        return res.json();
-    }).then(focusWeather);
+    fetch('http://ip-api.com/json/')
+    .then(function (response) {
+        console.log(response.json)
+        return response.json()
+    }).then(getLocation);
 }
 
-function focusWeather(data) {
-    let main = data.main;
-    let weather = data.weather;
+function focusWeather(data, countryFromAPI, success) {
+    console.log(data);
 
     let weatherDictionary = {
-        country: data.sys.country,
+        success: success,
+        country: countryFromAPI,
         city: data.name,
-        temperature: `Feels Like ${main.temp.toFixed(0) - 273}°C`,
-        humidity: main.humidity,
-        description: weather[0].main,
-        icon: `http://openweathermap.org/img/wn/${weather[0].icon}@4x.png`
+        temperature: `Feels Like ${data.main.temp.toFixed(0) - 273}°C`,
+        humidity: data.main.humidity,
+        description: data.weather[0].main,
+        icon: `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`
     }
 
     focusBrowser(weatherDictionary);
+}
+
+function getLocation(data) {
+    console.log(data);
+    
+    let location = {
+        country: data.country,
+        lat: data.lat,
+        lon: data.lon,
+        success: data.status == "success" ? true : false,
+    };
+
+    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=ecbd8d55ed62141fd514798906526fe0`)
+    .then((res) => {
+        return res.json();
+    }).then((res) => {
+        focusWeather(res, location.country, location.success);
+    });
 }

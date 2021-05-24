@@ -105,7 +105,8 @@ h3 {
     flex-direction: column;
 }
 
-.results .error {
+.results .error,
+.no-def-error {
     width: 100%;
     color: gray;
     text-align: center;
@@ -266,4 +267,9 @@ h3 {
     font-size: 13px !important;
     text-align: center !important;
     display: block !important;
+}
+
+.eval_err {
+    font-size: 22px !important;
+    color: white !important;
 }
