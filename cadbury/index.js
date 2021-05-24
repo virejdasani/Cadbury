@@ -252,6 +252,7 @@ function getLocation(data) {
     });
 }
 
+// This shows the command in the browserResults
 function focusCommand(command, value) {
     if (command == "google" || command == "search") {
         browserResults.innerHTML =
@@ -264,8 +265,8 @@ function focusCommand(command, value) {
     }
 }
 
+// This googles the value in users default browser
 function google(value) {
-    // alert()
     // This will google the value
     window.open("https://www.google.com/search?q="+value, "_blank");
 }
