@@ -258,7 +258,7 @@ function focusCommand(command, value) {
         resultsDiv.style.display = "block"
         browserResults.style.display = "block"
         focusDictionary(null, null);
-        // window.open("https://google.com/", "_blank");
+
 
         document.addEventListener("keyup", (e) => {
             if (e.code === 'Enter') {
@@ -270,4 +270,7 @@ function focusCommand(command, value) {
 
 function google() {
     alert()
+
+    // This will google the value
+    // window.open("https://www.google.com/search?q=${value}", "_blank");
 }
