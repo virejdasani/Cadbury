@@ -1,7 +1,8 @@
-const { app, BrowserWindow, globalShortcut, Tray, systemPreferences } = require("electron");
+const { app, BrowserWindow, globalShortcut, Tray, systemPreferences, shell } = require("electron");
 const open = require("open");
 const { platform } = require("os");
 const path = require("path");
+const { electron } = require("process");
 const assetsDirectory = path.join(__dirname, 'assets')
 
 let window;
@@ -28,7 +29,7 @@ const initializeTray = () => {
 const initializeApp = () => {
     window = new BrowserWindow({
         height: 500,
-        width: 700,
+        width: 800,
         transparent: true,
         thickFrame: false,
         hasShadow: true,
@@ -61,7 +62,7 @@ const initializeApp = () => {
 
     window.webContents.on('new-window', function (event, url) {
         event.preventDefault()
-        open(url);
+        shell.openExternal(url);
     })
 
     if (process.platform == 'darwin') {
@@ -83,7 +84,7 @@ const toggleCadburyVisibility = () => {
 
 const launchCadbury = () => {
     window.reload();
-    window.setSize(700, 500);
+    window.setSize(800, 500);
     setTimeout(() => {
         window.show();
     }, 150)

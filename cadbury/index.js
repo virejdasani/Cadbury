@@ -20,7 +20,12 @@ cadbury.addEventListener("keyup", (e) => {
         }
     });
 
-    if (cadbury.value == "" || cadbury.length == 1) {
+    browserResults.innerHTML = 
+    `
+    <span class="error">No borwser results found for "${cadbury.value}"</span>
+    `
+
+    if (cadbury.value == "") {
         quickMeanings.innerHTML = "";
         browserResults.innerHTML = "";
         resultsDiv.style.display = "none";
@@ -35,6 +40,13 @@ cadbury.addEventListener("keyup", (e) => {
     
     if (cadbury.value == "weather" || cadbury.value == "WEATHER" || cadbury.value == "Weather" || cadbury.value == "wEATHER") {
         getWeather();
+    }
+
+    if (cadbury.value == "news") {
+        fetch("https://content.guardianapis.com/search?api-key=605eae97-c0db-48e7-847e-445047971b66")
+        .then(res => {
+            return res.json();
+        }).then(focusBrowser)
     }
 });
 
@@ -60,48 +72,112 @@ function focusDictionary(key, definition) {
 }
 
 function focusBrowser(data) {
-    console.log(navigator.onLine);
     if (!navigator.onLine) {
         browserResults.innerHTML = 
         `
         <span class="error">You are not connected to the internet</span>
         `
     } else {
-        browserResults.innerHTML =
-        `
-        <img class="loader" src="./assets/loading_spinner.gif">
-        `;
+        if (cadbury.value == "weather") {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                console.log(position.coords.latitude, position.coords.longitude);
+            }, (err) => {
+                console.log(err);
+            });
 
-        setTimeout(() => {
-            if (!data || data === undefined || data === null || data === "") {
-                browserResults.innerHTML =
-                `
-                <span class="error">There was a problem loading browser results</span>
-                `;
-            }
-        }, 3000);
+            browserResults.innerHTML =
+            `
+            <img class="loader" src="./assets/loading_spinner.gif">
+            `;
 
-        browserResults.innerHTML = 
-        `
-        <div class="weather_results">
-            <img src="${data.icon}" class="weather_icon">
-            <div class="weather_info">
-                <h2>${data.city}, ${data.country}</h2>
-                <h3>${data.temperature}</h3>
-                <h3>${data.description}</h3>
+            setTimeout(() => {
+                if (!data) {
+                    browserResults.innerHTML =
+                    `
+                    <span class="error">No results found for "${cadbury.value}"</span>
+                    `;
+                }
+            }, 3000);
+
+            browserResults.innerHTML = 
+            `
+            <div class="weather_results">
+                <img src="${data?.icon}" class="weather_icon">
+                <div class="weather_info">
+                    <h2>${data?.city}, ${data?.country}</h2>
+                    <h3>${data?.temperature}</h3>
+                    <h3>${data?.description}</h3>
+                </div>
             </div>
-        </div>
-        `
+            `;
+        } else if (cadbury.value == "news") {
+
+            console.log(data);
+            browserResults.innerHTML =
+            `
+            <img class="loader" src="./assets/loading_spinner.gif">
+            `;
+
+            setTimeout(() => {
+                if (!data.response) {
+                    browserResults.innerHTML =
+                    `
+                    <span class="error">Couldn't load the news panel</span>
+                    `;
+                }
+            }, 3000);
+
+            let article1 = {
+                title: data.response.results[0]?.webTitle,
+                link: data.response.results[0]?.webUrl,
+                section: data.response.results[0]?.pillarName,
+            }
+            let article2 = {
+                title: data.response.results[3]?.webTitle,
+                link: data.response.results[3]?.webUrl,
+                section: data.response.results[3]?.pillarName,
+            }
+            let article3 = {
+                title: data.response.results[7]?.webTitle,
+                link: data.response.results[7]?.webUrl,
+                section: data.response.results[7]?.pillarName,
+            }
+        
+            browserResults.innerHTML = 
+            `
+            <a class="search_result_li" href="${article1.link}">
+                <span>${article1.title} • ${article1.section}</span>
+            </a>
+            <a class="search_result_li" href="${article2.link}">
+                <span>${article2.title} • ${article2.section}</span>
+            </a>
+            <a class="search_result_li" href="${article3.link}">
+                <span>${article3.title} • ${article3.section}</span>
+            </a>
+            `;
+
+            cadbury.addEventListener("keypress", (e) => {
+                if (e.keyCode == 40) {
+                    console.log('ttatatata');
+                }
+            })
+        }
     }
 }
 
 function getWeather() {
-    if (navigator.onLine) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?lat=46.6863&lon=7.8632&appid=ecbd8d55ed62141fd514798906526fe0`)
-        .then((res) => {
-            return res.json();
-        }).then(focusWeather);
-    }
+
+    // navigator.geolocation.getCurrentPosition((pos) => {
+    //     console.log(pos.coords.latitude);
+    //     console.log(pos.coords.longitude);
+    // }, (err) => {
+    //     console.log(err);
+    // });
+
+    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=46.6863&lon=7.8632&appid=ecbd8d55ed62141fd514798906526fe0`)
+    .then((res) => {
+        return res.json();
+    }).then(focusWeather);
 }
 
 function focusWeather(data) {

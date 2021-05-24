@@ -10,20 +10,19 @@ body {
     align-items: center;
     border-radius: 10px;
     padding: 5px;
-    animation: none;
+    /* animation: none; */
     /* padding-top: 10px; */
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 .main__window {
     display: flex;
     flex-direction: column;
     margin: auto;
-    width: 650px;
+    width: 750px;
     /* background-color: rgb(29, 29, 29); */
     border-radius: 10px;
     border: none;
-    overflow: hidden;
 }
 
 @keyframes easier {
@@ -45,19 +44,17 @@ input {
     min-width: 100%;
     background-color: rgba(47, 47, 47, 0.952);
     border-radius: 10px;
-    /* box-shadow: 4px 4px 10px rgb(29, 29, 29); */
-    box-shadow: 4px 4px 4px rgb(45, 45, 45);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 9px 18px, rgba(0, 0, 0, 0.22) 0px 7.5px 6px;
     color: rgb(194, 194, 194);
     height: 50px;
     border: none;
-    outline: none;
     text-indent: 10px;
     font-size: 19px;
     animation: easier 0.5s;
     background-image: url("./assets/search_icon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;
-    background-position: 97% center;
+    background-position: 98% center;
     outline: 0;
     border: none !important;
 }
@@ -70,7 +67,7 @@ input {
     width: 100%;
     background-color: rgba(47, 47, 47, 0.952);
     color: white;
-    box-shadow: 4px 4px 4px rgb(45, 45, 45);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 9px 18px, rgba(0, 0, 0, 0.22) 0px 7.5px 6px;
     padding-bottom: 30px;
     animation: easier 0.5s;
     max-height: 340px;
@@ -142,21 +139,31 @@ h3 {
     height: 50px;
     display: flex;
     flex-direction: row !important;
-    width: fit-content;
+    width: 96%;
     align-items: center;
+    justify-content: center;
     padding: 10px 5px;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 7px;
-    margin-left: 10px;
-    margin-right: 10px;
+    border-radius: 10px;
+    margin-left: 16px;
     margin-top: 5px;
     margin-bottom: 5px;
-    margin: auto;
+    transition: 200ms ease-in-out;
+}
+
+.search_result_li:focus {
+    outline: none;
+    background-color: rgb(29, 29, 29);
+}
+
+.search_result_li a {
+    border-radius: 10px;
 }
 
 .search_result_li:hover {
     background-color: rgb(29, 29, 29);
+    transition: 200ms ease-in-out;
 }
 
 .search_result_li img {
@@ -181,8 +188,8 @@ h3 {
     text-align: left !important;
 }
 
-.search_result_div p {
-    width: 502px;
+.search_result_li span {
+    width: 602px;
     max-width: 502px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -190,6 +197,8 @@ h3 {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    text-align: center;
+    border-radius: 10px;
 }
 
 .browser__results {
