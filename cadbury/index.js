@@ -117,20 +117,21 @@ function focusBrowser(data, numeric) {
                     `
                     <span class="error">No results found for "${cadbury.value}"</span>
                     `;
+                } else {
+                    browserResults.innerHTML = 
+                    `
+                    <div class="weather_results">
+                        <img src="${data?.icon}" class="weather_icon">
+                        <div class="weather_info">
+                            <h2>${data?.city}, ${data?.country}</h2>
+                            <h3>${data?.temperature}</h3>
+                            <h3>${data?.description}</h3>
+                        </div>
+                    </div>
+                    `;
                 }
-            }, 3000);
-
-            browserResults.innerHTML = 
-            `
-            <div class="weather_results">
-                <img src="${data?.icon}" class="weather_icon">
-                <div class="weather_info">
-                    <h2>${data?.city}, ${data?.country}</h2>
-                    <h3>${data?.temperature}</h3>
-                    <h3>${data?.description}</h3>
-                </div>
-            </div>
-            `;
+            }, 1000);
+            
         } else if (cadbury.value == "news") {
 
             console.log(data);
@@ -145,37 +146,37 @@ function focusBrowser(data, numeric) {
                     `
                     <span class="error">Couldn't load the news panel</span>
                     `;
+                } else {
+                    let article1 = {
+                        title: data.response.results[0]?.webTitle,
+                        link: data.response.results[0]?.webUrl,
+                        section: data.response.results[0]?.pillarName,
+                    }
+                    let article2 = {
+                        title: data.response.results[3]?.webTitle,
+                        link: data.response.results[3]?.webUrl,
+                        section: data.response.results[3]?.pillarName,
+                    }
+                    let article3 = {
+                        title: data.response.results[7]?.webTitle,
+                        link: data.response.results[7]?.webUrl,
+                        section: data.response.results[7]?.pillarName,
+                    }
+                
+                    browserResults.innerHTML = 
+                    `
+                    <a class="search_result_li" href="${article1.link}">
+                        <span>${article1.title} • ${article1.section}</span>
+                    </a>
+                    <a class="search_result_li" href="${article2.link}">
+                        <span>${article2.title} • ${article2.section}</span>
+                    </a>
+                    <a class="search_result_li" href="${article3.link}">
+                        <span>${article3.title} • ${article3.section}</span>
+                    </a>
+                    `;
                 }
-            }, 3000);
-
-            let article1 = {
-                title: data.response.results[0]?.webTitle,
-                link: data.response.results[0]?.webUrl,
-                section: data.response.results[0]?.pillarName,
-            }
-            let article2 = {
-                title: data.response.results[3]?.webTitle,
-                link: data.response.results[3]?.webUrl,
-                section: data.response.results[3]?.pillarName,
-            }
-            let article3 = {
-                title: data.response.results[7]?.webTitle,
-                link: data.response.results[7]?.webUrl,
-                section: data.response.results[7]?.pillarName,
-            }
-        
-            browserResults.innerHTML = 
-            `
-            <a class="search_result_li" href="${article1.link}">
-                <span>${article1.title} • ${article1.section}</span>
-            </a>
-            <a class="search_result_li" href="${article2.link}">
-                <span>${article2.title} • ${article2.section}</span>
-            </a>
-            <a class="search_result_li" href="${article3.link}">
-                <span>${article3.title} • ${article3.section}</span>
-            </a>
-            `;
+            }, 1000);
     }
 
     if (numeric) {
