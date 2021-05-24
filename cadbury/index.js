@@ -22,11 +22,7 @@ cadbury.addEventListener("keyup", (e) => {
 
     browserResults.innerHTML = 
     `
-<<<<<<< HEAD
     <span class="error">No results found for "${cadbury.value}"</span>
-=======
-    <span class="error">No browser results found for "${cadbury.value}"</span>
->>>>>>> c2019d5e0ba4b5fab0f6e7e7c85f76f9d13d0ab4
     `
 
     if (cadbury.value == "") {
