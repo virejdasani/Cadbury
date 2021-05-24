@@ -22,7 +22,7 @@ cadbury.addEventListener("keyup", (e) => {
 
     browserResults.innerHTML = 
     `
-    <span class="error">No borwser results found for "${cadbury.value}"</span>
+    <span class="error">No browser results found for "${cadbury.value}"</span>
     `
 
     if (cadbury.value == "") {
@@ -156,24 +156,16 @@ function focusBrowser(data) {
             </a>
             `;
 
-            cadbury.addEventListener("keypress", (e) => {
-                if (e.keyCode == 40) {
-                    console.log('ttatatata');
-                }
-            })
+            // cadbury.addEventListener("keypress", (e) => {
+            //     if (e.keyCode == 40) {
+            //         console.log('ttatatata');
+            //     }
+            // })
         }
     }
 }
 
 function getWeather() {
-
-    // navigator.geolocation.getCurrentPosition((pos) => {
-    //     console.log(pos.coords.latitude);
-    //     console.log(pos.coords.longitude);
-    // }, (err) => {
-    //     console.log(err);
-    // });
-
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=46.6863&lon=7.8632&appid=ecbd8d55ed62141fd514798906526fe0`)
     .then((res) => {
         return res.json();
