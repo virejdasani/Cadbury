@@ -263,6 +263,38 @@ function focusCommand(command, value) {
         browserResults.style.display = "block"
         focusDictionary(null, null);
     }
+    if (command == "wiki" || command == "wikipedia") {
+        browserResults.innerHTML =
+            `
+        <span class="error eval_err">Search Wikipedia For ${value}</span>
+        `;
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+    }
+}
+
+function enterPressed() {
+    // Check if there is a command
+    if (cadbury.value[0] == ":") {
+        // If there is a command, get the respective substrings into cmd and value
+        // This gets the first word of the input without the commandKey
+        let command = cadbury.value.slice(1);
+        let cmd = command.split(" ")[0];
+        // This gets the value after the commandKey + command + the space character after the command
+        let value = cadbury.value.slice(cmd.length + 2);
+
+        // If the cmd is google or search, google the value
+        if (cmd == "google" || cmd == "search") {
+            google(value);
+        }
+        if (cmd == "wiki" || cmd == "wikipedia") {
+            wikipedia(value)
+        }
+
+    } else {
+        console.log("Not a valid command");
+    }
 }
 
 // This googles the value in users default browser
@@ -271,19 +303,8 @@ function google(value) {
     window.open("https://www.google.com/search?q="+value, "_blank");
 }
 
-function enterPressed() {
-    // Check if there is a command
-    if (cadbury.value[0] == ":") {
-        // If there is a command, get the respective substrings into cmd and value
-        // This gets the first word of the input without the commandKey
-        let command = cadbury.value.slice(1)
-        let cmd = command.split(" ")[0]
-        // This gets the value after the commandKey + command + the space character after the command
-        let value = cadbury.value.slice(cmd.length + 2)
-
-        // If the cmd is google or search, google the value
-        if (cmd == "google" || cmd == "search") {
-            google(value)
-        }
-    }
+// This searches on wikipedia
+function wikipedia(value) {
+    // This will google the value
+    window.open("https://en.wikipedia.org/wiki/"+value, "_blank");
 }
