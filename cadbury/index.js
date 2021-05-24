@@ -49,6 +49,18 @@ cadbury.addEventListener("keyup", (e) => {
         }).then(focusBrowser)
     }
 
+    let commandKey = ":"
+    // If the command key is pressed
+    if (cadbury.value[0] == commandKey) {
+        // This gets the first word of the input without the commandKey
+        let command = cadbury.value.slice(1)
+        let cmd = command.split(" ")[0]
+        // This gets the value after the commandKey + command + the space character after the command
+        let value = cadbury.value.slice(cmd.length+2)
+        // Pass it into focusCommand
+        focusCommand(cmd, value)
+    }
+
     let mathCodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "*", "/", "-", "+", "(", ")", "[", "]", "%"];
 
     mathCodes.map((code) => {
@@ -232,4 +244,30 @@ function getLocation(data) {
     }).then((res) => {
         focusWeather(res, location.country, location.success);
     });
+}
+
+function focusCommand(command, value) {
+    console.log(command)
+    console.log(value)
+
+    if (command == "google" || command == "search") {
+        browserResults.innerHTML =
+            `
+        <span class="error eval_err">Google Search ${value}</span>
+        `;
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+        // window.open("https://google.com/", "_blank");
+
+        document.addEventListener("keyup", (e) => {
+            if (e.code === 'Enter') {
+                google(value)
+            }
+        })
+    }
+}
+
+function google() {
+    alert()
 }
