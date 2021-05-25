@@ -4,17 +4,17 @@ const resultsDiv = document.getElementsByClassName("results")[0];
 const browserResults = document.getElementsByClassName("browser__results")[0];
 const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
 
-// Making the results div dissapear
+// Making the results div disappear
 resultsDiv.style.display = "none";
 
-// Checking everytime a key is pressed
+// Checking every time a key is pressed
 cadbury.addEventListener("keyup", (e) => {
     // Checking the triggering of the enter key (keyCode = 13)
     if (e.code === "Enter") {
         enterPressed()
     }
 
-    // Mapping through the JSON dictinary
+    // Mapping through the JSON dictionary
     Object.keys(definitions).map((key, index) => {
         // Either use if includes 
         // if (key.includes(cadbury.value)) {
@@ -35,7 +35,7 @@ cadbury.addEventListener("keyup", (e) => {
     <span class="error">No results found for "${cadbury.value}"</span>
     `
 
-    // Making the results div dissapear again
+    // Making the results div disappear again
     if (cadbury.value == "") {
         quickMeanings.innerHTML = "";
         browserResults.innerHTML = "";
@@ -76,7 +76,6 @@ cadbury.addEventListener("keyup", (e) => {
 
         // Pass it into focusCommand
         focusCommand(cmd, value)
-        
     }
 
     // Possible values of an expression
