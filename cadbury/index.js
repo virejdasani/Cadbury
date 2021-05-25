@@ -54,7 +54,7 @@ cadbury.addEventListener("keyup", (e) => {
     }
     
     // Checking if "Weather" is in the input
-    if (cadburyValue == "weather") {
+    if (cadbury.value.toLowerCase() == "weather") {
         // Calling the weather function
         getWeather();
     }
@@ -138,7 +138,7 @@ function focusBrowser(data, numeric) {
         <span class="error">You are not connected to the internet</span>
         `
     } else {
-        if (cadbury.value == "weather") {
+        if (cadbury.value.toLowerCase() == "weather") {
             browserResults.innerHTML =
             `
             <img class="loader" src="./assets/loading_spinner.gif">
@@ -228,13 +228,13 @@ function focusBrowser(data, numeric) {
 function getWeather() {
     fetch('http://ip-api.com/json/')
     .then(function (response) {
-        console.log(response.json)
+        // console.log(response.json)
         return response.json()
     }).then(getLocation);
 }
 
 function focusWeather(data, countryFromAPI, success) {
-    console.log(data);
+    // console.log(data);
 
     let weatherDictionary = {
         success: success,
@@ -250,7 +250,7 @@ function focusWeather(data, countryFromAPI, success) {
 }
 
 function getLocation(data) {
-    console.log(data);
+    // console.log(data);
     
     let location = {
         country: data.country,
