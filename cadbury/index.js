@@ -269,28 +269,28 @@ function getLocation(data) {
 
 // This shows the command in the browserResults
 function focusCommand(command, value) {
-    if (command == "google" || command == "search") {
+    if (command.toLowerCase() == "google" || command.toLowerCase() == "search") {
         browserResults.innerHTML =
             `
-        <span class="error eval_err">Search Google For "${value}"</span>
+        <span class="error eval_err">Press Enter To Search Google For "${value}"</span>
         `;
         resultsDiv.style.display = "block"
         browserResults.style.display = "block"
         focusDictionary(null, null);
     }
-    if (command == "wiki" || command == "wikipedia") {
+    if (command.toLowerCase() == "wiki" || command.toLowerCase() == "wikipedia") {
         browserResults.innerHTML =
             `
-        <span class="error eval_err">Search Wikipedia For "${value}"</span>
+        <span class="error eval_err">Press Enter To Search Wikipedia For "${value}"</span>
         `;
         resultsDiv.style.display = "block"
         browserResults.style.display = "block"
         focusDictionary(null, null);
     }
-    if (command == "amazon") {
+    if (command.toLowerCase() == "amazon") {
         browserResults.innerHTML =
             `
-        <span class="error eval_err">Search Wikipedia For "${value}"</span>
+        <span class="error eval_err">Press Enter To Search Amazon For "${value}"</span>
         `;
         resultsDiv.style.display = "block"
         browserResults.style.display = "block"
@@ -309,11 +309,14 @@ function enterPressed() {
         let value = cadbury.value.slice(cmd.length + 2);
 
         // If the cmd is google or search, google the value
-        if (cmd == "google" || cmd == "search") {
+        if (cmd.toLowerCase() == "google" || cmd.toLowerCase() == "search") {
             google(value);
         }
-        if (cmd == "wiki" || cmd == "wikipedia") {
+        if (cmd.toLowerCase() == "wiki" || cmd.toLowerCase() == "wikipedia") {
             wikipedia(value)
+        }
+        if (cmd.toLowerCase() == "amazon") {
+            amazon(value)
         }
 
     } else {
@@ -329,6 +332,11 @@ function google(value) {
 
 // This searches on wikipedia
 function wikipedia(value) {
-    // This will google the value
     window.open("https://en.wikipedia.org/wiki/"+value, "_blank");
 }
+
+// This searches on amazon
+function amazon(value) {
+    window.open("https://www.amazon.com/s?k="+value, "_blank");
+}
+
