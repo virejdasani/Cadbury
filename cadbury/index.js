@@ -75,7 +75,7 @@ cadbury.addEventListener("keyup", (e) => {
         let value = cadbury.value.slice(cmd.length+2)
 
         // Pass it into focusCommand
-        focusCommand(cmdd, value)
+        focusCommand(cmd, value)
         
     }
 
