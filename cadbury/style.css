@@ -50,7 +50,7 @@ input {
     border: none;
     text-indent: 10px;
     font-size: 19px;
-    animation: easier 0.5s;
+    /* animation: easier 0.5s; */
     background-image: url("./assets/search_icon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;

@@ -1,11 +1,20 @@
+// DOM Querying
 const cadbury = document.querySelector("#searchbox");
 const resultsDiv = document.getElementsByClassName("results")[0];
 const browserResults = document.getElementsByClassName("browser__results")[0];
 const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
 
+// Making the results div dissapear
 resultsDiv.style.display = "none";
 
+// Checking everytime a key is pressed
 cadbury.addEventListener("keyup", (e) => {
+    // Checking the triggering of the enter key (keyCode = 13)
+    if (e.code === "Enter") {
+        enterPressed()
+    }
+
+    // Mapping through the JSON dictinary
     Object.keys(definitions).map((key, index) => {
         // Either use if includes 
         // if (key.includes(cadbury.value)) {
@@ -20,17 +29,20 @@ cadbury.addEventListener("keyup", (e) => {
         }
     });
 
+    // Focusing on the 'no results found' flash
     browserResults.innerHTML = 
     `
     <span class="error">No results found for "${cadbury.value}"</span>
     `
 
+    // Making the results div dissapear again
     if (cadbury.value == "") {
         quickMeanings.innerHTML = "";
         browserResults.innerHTML = "";
         resultsDiv.style.display = "none";
     } 
 
+    // Checking if the user is online
     if (!navigator.onLine) {
         browserResults.innerHTML = 
         `
@@ -38,23 +50,45 @@ cadbury.addEventListener("keyup", (e) => {
         `
     }
     
+    // Checking if "Weather" is in the input
     if (cadbury.value == "weather" || cadbury.value == "WEATHER" || cadbury.value == "Weather" || cadbury.value == "wEATHER") {
+        // Calling the weather function
         getWeather();
     }
 
+    // Checking if "News" is in the input
     if (cadbury.value == "news") {
+        // Fetching the latest news using the Guardians API
         fetch("https://content.guardianapis.com/search?api-key=605eae97-c0db-48e7-847e-445047971b66")
         .then(res => {
             return res.json();
         }).then(focusBrowser)
     }
 
+    const commandKey = ":"
+    // If the command key is pressed
+    if (cadbury.value[0] == commandKey) {
+        // This gets the first word of the input without the commandKey
+        let command = cadbury.value.slice(1)
+        let cmd = command.split(" ")[0]
+        // This gets the value after the commandKey + command + the space character after the command
+        let value = cadbury.value.slice(cmd.length+2)
+
+        // Pass it into focusCommand
+        focusCommand(cmdd, value)
+        
+    }
+
+    // Possible values of an expression
     let mathCodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "*", "/", "-", "+", "(", ")", "[", "]", "%"];
 
+    // Mapping through mathCodes to check for presence
     mathCodes.map((code) => {
+        // If values from mathCodes are included
         if (cadbury.value.includes(code)) {
             console.log("number found");
             try {
+                // Calculating the value
                 let expressionAnswer = eval(cadbury.value);
                 focusBrowser(expressionAnswer, numeric = true);
             } catch (err) {
@@ -165,13 +199,13 @@ function focusBrowser(data, numeric) {
                 
                     browserResults.innerHTML = 
                     `
-                    <a class="search_result_li" href="${article1.link}">
+                    <a class="search_result_li" href="${article1.link}" target="_blank">
                         <span>${article1.title} • ${article1.section}</span>
                     </a>
-                    <a class="search_result_li" href="${article2.link}">
+                    <a class="search_result_li" href="${article2.link}" target="_blank">
                         <span>${article2.title} • ${article2.section}</span>
                     </a>
-                    <a class="search_result_li" href="${article3.link}">
+                    <a class="search_result_li" href="${article3.link}" target="_blank">
                         <span>${article3.title} • ${article3.section}</span>
                     </a>
                     `;
@@ -232,4 +266,61 @@ function getLocation(data) {
     }).then((res) => {
         focusWeather(res, location.country, location.success);
     });
+}
+
+// This shows the command in the browserResults
+function focusCommand(command, value) {
+    if (command == "google" || command == "search") {
+        browserResults.innerHTML =
+            `
+        <span class="error eval_err">Search Google For "${value}"</span>
+        `;
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+    }
+    if (command == "wiki" || command == "wikipedia") {
+        browserResults.innerHTML =
+            `
+        <span class="error eval_err">Search Wikipedia For "${value}"</span>
+        `;
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+    }
+}
+
+function enterPressed() {
+    // Check if there is a command
+    if (cadbury.value[0] == ":") {
+        // If there is a command, get the respective substrings into cmd and value
+        // This gets the first word of the input without the commandKey
+        let command = cadbury.value.slice(1);
+        let cmd = command.split(" ")[0];
+        // This gets the value after the commandKey + command + the space character after the command
+        let value = cadbury.value.slice(cmd.length + 2);
+
+        // If the cmd is google or search, google the value
+        if (cmd == "google" || cmd == "search") {
+            google(value);
+        }
+        if (cmd == "wiki" || cmd == "wikipedia") {
+            wikipedia(value)
+        }
+
+    } else {
+        console.log("Not a valid command");
+    }
+}
+
+// This googles the value in users default browser
+function google(value) {
+    // This will google the value
+    window.open("https://www.google.com/search?q="+value, "_blank");
+}
+
+// This searches on wikipedia
+function wikipedia(value) {
+    // This will google the value
+    window.open("https://en.wikipedia.org/wiki/"+value, "_blank");
 }

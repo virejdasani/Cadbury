@@ -60,10 +60,15 @@ const initializeApp = () => {
         destroyCadbury();
     });
 
-    window.webContents.on('new-window', function (event, url) {
-        event.preventDefault()
-        shell.openExternal(url);
-    })
+    // window.webContents.on('new-window', function (event, url) {
+    //     event.preventDefault()
+    //     shell.openExternal(url);
+    // });
+
+    window.webContents.on('new-window', function(e, url) {
+        e.preventDefault();
+        require('electron').shell.openExternal(url);
+      });
 
     if (process.platform == 'darwin') {
         // Don't show the app in the dock for macOS
