@@ -9,6 +9,9 @@ resultsDiv.style.display = "none";
 
 // Checking every time a key is pressed
 cadbury.addEventListener("keyup", (e) => {
+
+    var cadburyValue = cadbury.value.toLowerCase()
+
     // Checking the triggering of the enter key (keyCode = 13)
     if (e.code === "Enter") {
         enterPressed()
@@ -51,7 +54,7 @@ cadbury.addEventListener("keyup", (e) => {
     }
     
     // Checking if "Weather" is in the input
-    if (cadbury.value == "weather" || cadbury.value == "WEATHER" || cadbury.value == "Weather" || cadbury.value == "wEATHER") {
+    if (cadburyValue == "weather") {
         // Calling the weather function
         getWeather();
     }
@@ -129,9 +132,6 @@ function focusDictionary(key, definition) {
 }
 
 function focusBrowser(data, numeric) {
-
-    console.log(numeric);
-
     if (!navigator.onLine) {
         browserResults.innerHTML = 
         `
@@ -279,6 +279,15 @@ function focusCommand(command, value) {
         focusDictionary(null, null);
     }
     if (command == "wiki" || command == "wikipedia") {
+        browserResults.innerHTML =
+            `
+        <span class="error eval_err">Search Wikipedia For "${value}"</span>
+        `;
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+    }
+    if (command == "amazon") {
         browserResults.innerHTML =
             `
         <span class="error eval_err">Search Wikipedia For "${value}"</span>
