@@ -33,8 +33,8 @@ cadbury.addEventListener("keyup", (e) => {
     });
 
     // Focusing on the 'no results found' flash
-    browserResults.innerHTML = 
-    `
+    browserResults.innerHTML =
+        `
     <span class="error">No results found for "${cadbury.value}"</span>
     `
 
@@ -43,16 +43,16 @@ cadbury.addEventListener("keyup", (e) => {
         quickMeanings.innerHTML = "";
         browserResults.innerHTML = "";
         resultsDiv.style.display = "none";
-    } 
+    }
 
     // Checking if the user is online
     if (!navigator.onLine) {
-        browserResults.innerHTML = 
-        `
+        browserResults.innerHTML =
+            `
         <span class="error">You are not connected to the internet</span>
         `
     }
-    
+
     // Checking if "Weather" is in the input
     if (cadbury.value.toLowerCase() == "weather") {
         // Calling the weather function
@@ -63,9 +63,9 @@ cadbury.addEventListener("keyup", (e) => {
     if (cadbury.value == "news") {
         // Fetching the latest news using the Guardians API
         fetch("https://content.guardianapis.com/search?api-key=605eae97-c0db-48e7-847e-445047971b66")
-        .then(res => {
-            return res.json();
-        }).then(focusBrowser)
+            .then(res => {
+                return res.json();
+            }).then(focusBrowser)
     }
 
     const commandKey = ":"
@@ -75,7 +75,7 @@ cadbury.addEventListener("keyup", (e) => {
         let command = cadbury.value.slice(1)
         let cmd = command.split(" ")[0]
         // This gets the value after the commandKey + command + the space character after the command
-        let value = cadbury.value.slice(cmd.length+2)
+        let value = cadbury.value.slice(cmd.length + 2)
 
         // Pass it into focusCommand
         focusCommand(cmd, value)
@@ -88,13 +88,13 @@ cadbury.addEventListener("keyup", (e) => {
     mathCodes.map((code) => {
         // If values from mathCodes are included
         if (cadbury.value.includes(code)) {
-            console.log("number found");
+            // console.log("number found");
             try {
                 // Calculating the value
                 let expressionAnswer = eval(cadbury.value);
                 focusBrowser(expressionAnswer, numeric = true);
             } catch (err) {
-                console.log("not a number...");
+                // console.log("not a number...");
             }
         }
     });
@@ -104,7 +104,7 @@ function focusDictionary(key, definition) {
     if (key == null || definition == null) {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
-        `
+            `
         <li>
             <span class="no-def-error">No Results Found</span>
         </li>
@@ -112,17 +112,17 @@ function focusDictionary(key, definition) {
     } else {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
-        `
+            `
         <li>
             <span>No Results Found</span>
         </li>
         `
-    // let term = data[0].word;
-    // console.log(data);
-    // let meaning = data[0].meanings[0].definitions[0].definition;
-    // resultsDiv.style.display = "block";
-    quickMeanings.innerHTML =
-        `
+        // let term = data[0].word;
+        // console.log(data);
+        // let meaning = data[0].meanings[0].definitions[0].definition;
+        // resultsDiv.style.display = "block";
+        quickMeanings.innerHTML =
+            `
         <li>
             <h3 class="term">"${key}"</h3>
             <span class="meaning">${definition}</span>
@@ -133,26 +133,26 @@ function focusDictionary(key, definition) {
 
 function focusBrowser(data, numeric) {
     if (!navigator.onLine) {
-        browserResults.innerHTML = 
-        `
+        browserResults.innerHTML =
+            `
         <span class="error">You are not connected to the internet</span>
         `
     } else {
         if (cadbury.value.toLowerCase() == "weather") {
             browserResults.innerHTML =
-            `
+                `
             <img class="loader" src="./assets/loading_spinner.gif">
             `;
 
             setTimeout(() => {
                 if (!data.success) {
                     browserResults.innerHTML =
-                    `
+                        `
                     <span class="error">No results found for "${cadbury.value}"</span>
                     `;
                 } else {
-                    browserResults.innerHTML = 
-                    `
+                    browserResults.innerHTML =
+                        `
                     <div class="weather_results">
                         <img src="${data?.icon}" class="weather_icon">
                         <div class="weather_info">
@@ -164,19 +164,19 @@ function focusBrowser(data, numeric) {
                     `;
                 }
             }, 1000);
-            
+
         } else if (cadbury.value == "news") {
 
-            console.log(data);
+            // console.log(data);
             browserResults.innerHTML =
-            `
+                `
             <img class="loader" src="./assets/loading_spinner.gif">
             `;
 
             setTimeout(() => {
                 if (!data.response) {
                     browserResults.innerHTML =
-                    `
+                        `
                     <span class="error">Couldn't load the news panel</span>
                     `;
                 } else {
@@ -195,9 +195,9 @@ function focusBrowser(data, numeric) {
                         link: data.response.results[7]?.webUrl,
                         section: data.response.results[7]?.pillarName,
                     }
-                
-                    browserResults.innerHTML = 
-                    `
+
+                    browserResults.innerHTML =
+                        `
                     <a class="search_result_li" href="${article1.link}" target="_blank">
                         <span>${article1.title} • ${article1.section}</span>
                     </a>
@@ -210,27 +210,27 @@ function focusBrowser(data, numeric) {
                     `;
                 }
             }, 1000);
-    }
+        }
 
-    if (numeric) {
-        browserResults.innerHTML = 
-        `
+        if (numeric) {
+            browserResults.innerHTML =
+                `
         <span class="error eval_err">${cadbury.value} = ${data}</span>
         `;
-        console.log(browserResults);
-        resultsDiv.style.display = "block"
-        browserResults.style.display = "block"
-        focusDictionary(null, null);
-    };
-}
+            // console.log(browserResults);
+            resultsDiv.style.display = "block"
+            browserResults.style.display = "block"
+            focusDictionary(null, null);
+        };
+    }
 }
 
 function getWeather() {
     fetch('http://ip-api.com/json/')
-    .then(function (response) {
-        // console.log(response.json)
-        return response.json()
-    }).then(getLocation);
+        .then(function (response) {
+            // console.log(response.json)
+            return response.json()
+        }).then(getLocation);
 }
 
 function focusWeather(data, countryFromAPI, success) {
@@ -251,7 +251,7 @@ function focusWeather(data, countryFromAPI, success) {
 
 function getLocation(data) {
     // console.log(data);
-    
+
     let location = {
         country: data.country,
         lat: data.lat,
@@ -260,11 +260,11 @@ function getLocation(data) {
     };
 
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=ecbd8d55ed62141fd514798906526fe0`)
-    .then((res) => {
-        return res.json();
-    }).then((res) => {
-        focusWeather(res, location.country, location.success);
-    });
+        .then((res) => {
+            return res.json();
+        }).then((res) => {
+            focusWeather(res, location.country, location.success);
+        });
 }
 
 // This shows the command in the browserResults
@@ -296,6 +296,51 @@ function focusCommand(command, value) {
         browserResults.style.display = "block"
         focusDictionary(null, null);
     }
+
+    if (command.toLowerCase() == "open") {
+
+        // if (google), then make it (https://google.com)
+        if (!cadbury.value.includes("http") && !cadbury.value.includes(".")) {
+            url = "https://" + value + ".com"
+
+            browserResults.innerHTML =
+                `
+            <span class="error eval_err">Press Enter To Open https://${value} (.com)</span>
+            `;
+
+        }
+        // if (http(s)://google), then make it (http(s)://google.com)
+        else if (cadbury.value.includes("http") && !cadbury.value.includes(".")) {
+            url = value + ".com"
+
+            browserResults.innerHTML =
+                `
+            <span class="error eval_err">Press Enter To Open ${value} (.com)</span>
+            `;
+        }
+        // if (google.(*)), then make it (https://google.(*))
+        else if (!cadbury.value.includes("http") && cadbury.value.includes(".")) {
+            url = "https://" + value
+
+            browserResults.innerHTML =
+                `
+            <span class="error eval_err">Press Enter To Open https://${value}</span>
+            `;
+        }
+        // if (https://google.com), then keep it (https://google.com)
+        else {
+            url = value
+
+            browserResults.innerHTML =
+                `
+            <span class="error eval_err">Press Enter To Open ${value}</span>
+            `;
+        }
+
+        resultsDiv.style.display = "block"
+        browserResults.style.display = "block"
+        focusDictionary(null, null);
+    }
 }
 
 function enterPressed() {
@@ -312,31 +357,58 @@ function enterPressed() {
         if (cmd.toLowerCase() == "google" || cmd.toLowerCase() == "search") {
             google(value);
         }
+        // If the cmd is wiki or wikipedia, wikipedia the value
         if (cmd.toLowerCase() == "wiki" || cmd.toLowerCase() == "wikipedia") {
             wikipedia(value)
         }
+        // If the cmd is amazon , amazon the value
         if (cmd.toLowerCase() == "amazon") {
             amazon(value)
         }
+        // If the cmd is open, do the following
+        if (cmd.toLowerCase() == "open") {
+            let url = ""
+            // if (google), then make it (https://google.com)
+            if (!value.includes("http") && !value.includes(".")) {
+                url = "https://" + value + ".com"
+            }
+            // if (http(s)://google), then make it (http(s)://google.com)
+            else if (value.includes("http") && !value.includes(".")) {
+                url = value + ".com"
+            }
+            // if (google.(*)), then make it (https://google.(*))
+            else if (!value.includes("http") && value.includes(".")) {
+                url = "https://" + value
+            }
+            // if (https://google.com), then keep it (https://google.com)
+            else {
+                url = value
 
-    } else {
-        console.log("Not a valid command");
+            }
+            openUrl(url)
+
+        } else {
+            // console.log("Not a valid command");
+        }
     }
 }
-
 // This googles the value in users default browser
 function google(value) {
     // This will google the value
-    window.open("https://www.google.com/search?q="+value, "_blank");
+    window.open("https://www.google.com/search?q=" + value, "_blank");
 }
 
 // This searches on wikipedia
 function wikipedia(value) {
-    window.open("https://en.wikipedia.org/wiki/"+value, "_blank");
+    window.open("https://en.wikipedia.org/wiki/" + value, "_blank");
 }
 
 // This searches on amazon
 function amazon(value) {
-    window.open("https://www.amazon.com/s?k="+value, "_blank");
+    window.open("https://www.amazon.com/s?k=" + value, "_blank");
 }
 
+// Open url that is passed in as parameter
+function openUrl(url) {
+    window.open(url, +"_blank")
+}
