@@ -153,7 +153,7 @@ body {
 .info_header {
     margin-bottom: 20px;
     font-size: 1.8rem;
-    color: #155799;
+    color: #4273e4;
     animation: slidedown 0.8s;
 }
 
@@ -195,7 +195,7 @@ body {
 }
 
 hr {
-    background-color: lightgray;
+    background-color: rgb(105, 105, 105);
     border: none;
     height: 1px;
     margin-top: 20px;
@@ -247,7 +247,7 @@ hr {
 }
 
 .tagline {
-    border-left: 5px solid #155799;
+    border-left: 5px solid #4273e4;
     padding-left: 10px;
     border-radius: 3px;
     margin-bottom: 20px;
