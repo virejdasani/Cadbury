@@ -1,8 +1,8 @@
 const { app, BrowserWindow, globalShortcut, Tray, systemPreferences, shell } = require("electron");
 const open = require("open");
-const { platform } = require("os");
+// const { platform } = require("os");
 const path = require("path");
-const { electron } = require("process");
+// const { electron } = require("process");
 const assetsDirectory = path.join(__dirname, 'assets')
 
 let window;
@@ -92,7 +92,7 @@ const launchCadbury = () => {
     window.setSize(800, 500);
     setTimeout(() => {
         window.show();
-    }, 150)
+    }, 180)
 }
 
 const destroyCadbury = () => {

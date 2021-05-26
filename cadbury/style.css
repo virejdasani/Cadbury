@@ -273,3 +273,14 @@ h3 {
     font-size: 22px !important;
     color: white !important;
 }
+
+.meaning_example {
+    text-align: center;
+    margin-top: 10px;
+    color: rgb(155, 155, 155);
+    max-width: 80%;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    /* margin-bottom: 5px; */
+}

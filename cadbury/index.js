@@ -17,20 +17,33 @@ cadbury.addEventListener("keyup", (e) => {
         enterPressed()
     }
 
-    // Mapping through the JSON dictionary
-    Object.keys(definitions).map((key, index) => {
-        // Either use if includes 
-        // if (key.includes(cadbury.value)) {
-        //     focusDictionary(key, definitions[key])
-        // }
+    // if the user is offline 
+    if (!navigator.onLine) {
+        // Mapping through the JSON dictionary
+        Object.keys(definitions).map((key, index) => {
+            // Either use if includes 
+            // if (key.includes(cadbury.value)) {
+            //     focusDictionary(key, definitions[key])
+            // }
 
-        // Another free dictionary API: https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
+            // Another free dictionary API: https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
 
-        // Or use if === value
-        if (key == cadbury.value) {
-            focusDictionary(key, definitions[key])
-        }
-    });
+            // Or use if === value
+            if (key == cadbury.value) {
+                focusDictionary(key, definitions[key])
+            }
+        });
+        // if user is online
+    } else {
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cadburyValue}`)
+        .then((res) => {
+            return res.json();
+        }).then(data => {
+            let dataHeader = data[0]?.meanings[0]?.definitions[0]
+            focusDictionary(cadburyValue, dataHeader.definition, dataHeader.example, [dataHeader.synonyms[0], dataHeader.synonyms[1], dataHeader.synonyms[2]]);
+            console.log(data);
+        })
+    }
 
     // Focusing on the 'no results found' flash
     browserResults.innerHTML =
@@ -57,6 +70,11 @@ cadbury.addEventListener("keyup", (e) => {
     if (cadbury.value.toLowerCase() == "weather") {
         // Calling the weather function
         getWeather();
+    }
+
+    // Checking if "help" is in the input
+    if (cadbury.value.toLowerCase() == "help") {
+        getHelp();
     }
 
     // Checking if "News" is in the input
@@ -100,7 +118,10 @@ cadbury.addEventListener("keyup", (e) => {
     });
 });
 
-function focusDictionary(key, definition) {
+function focusDictionary(key, definition, example, synonyms) {
+    if (synonyms) {
+        console.log("ssss");
+    }
     if (key == null || definition == null) {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
@@ -117,17 +138,27 @@ function focusDictionary(key, definition) {
             <span>No Results Found</span>
         </li>
         `
-        // let term = data[0].word;
-        // console.log(data);
-        // let meaning = data[0].meanings[0].definitions[0].definition;
-        // resultsDiv.style.display = "block";
-        quickMeanings.innerHTML =
+
+        // Checking if the example is present
+        if (example) {
+            quickMeanings.innerHTML =
             `
-        <li>
-            <h3 class="term">"${key}"</h3>
-            <span class="meaning">${definition}</span>
-        </li>
-        `;
+            <li>
+                <h3 class="term">"${key}"</h3>
+                <span class="meaning">${definition}</span>
+                <small class="meaning_example">Example - ${example}</small>
+                <small class="meaning_example">Synonyms - ${synonyms[0]}, ${synonyms[1]}, ${synonyms[2]}</small>
+            </li>
+            `;
+        } else {
+            quickMeanings.innerHTML =
+                `
+            <li>
+                <h3 class="term">"${key}"</h3>
+                <span class="meaning">${definition}</span>
+            </li>
+            `;
+        }
     }
 }
 
@@ -411,4 +442,14 @@ function amazon(value) {
 // Open url that is passed in as parameter
 function openUrl(url) {
     window.open(url, +"_blank")
+}
+
+function getHelp() {
+    browserResults.innerHTML = 
+    `
+    <div class="helper">
+        <li>help statements like this</li>
+    </div>
+    `
+    browserResults.style.display = "block";
 }
