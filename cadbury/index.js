@@ -137,7 +137,7 @@ function focusDictionary(key, definition, example, synonyms) {
         `
 
         // Checking if the example is present
-        if (example) {
+        if (example && synonyms[0] != undefined) {
             quickMeanings.innerHTML =
             `
             <li>
@@ -147,9 +147,18 @@ function focusDictionary(key, definition, example, synonyms) {
                 <small class="meaning_example">Synonyms - ${synonyms[0]}, ${synonyms[1]}, ${synonyms[2]}</small>
             </li>
             `;
-        } else {
+        } else if (example && synonyms[0] == undefined){
             quickMeanings.innerHTML =
                 `
+            <li>
+                <h3 class="term">"${key}"</h3>
+                <span class="meaning">${definition}</span>
+                <small class="meaning_example">Example - ${example}</small>
+            </li>
+            `;
+        } else {
+            quickMeanings.innerHTML =
+            `
             <li>
                 <h3 class="term">"${key}"</h3>
                 <span class="meaning">${definition}</span>
