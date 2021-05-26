@@ -90,7 +90,8 @@ body {
     margin-top: 30px;
 }
 
-.app_links .a_btns {
+.app_links .a_btns,
+.hidden_on_media {
     padding: 10px 20px;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 6px;
@@ -118,6 +119,10 @@ body {
         width: 70vw;
         margin-top: 5px;
         margin-bottom: 5px;
+    }
+
+    .hidden_on_media {
+        display: none;
     }
 }
 

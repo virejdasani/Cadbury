@@ -24,6 +24,7 @@ const initializeTray = () => {
     tray.on('click', function (event) {
         toggleCadburyVisibility()
     });
+    tray.setToolTip("Cadbury Search")
 }
 
 const initializeApp = () => {
