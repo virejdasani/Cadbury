@@ -35,13 +35,13 @@ cadbury.addEventListener("keyup", (e) => {
         });
         // if user is online
     } else {
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cadburyValue}`)
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cadbury.value}`)
         .then((res) => {
             return res.json();
         }).then(data => {
             let dataHeader = data[0]?.meanings[0]?.definitions[0]
-            focusDictionary(cadburyValue, dataHeader.definition, dataHeader.example, [dataHeader.synonyms[0], dataHeader.synonyms[1], dataHeader.synonyms[2]]);
-            console.log(data);
+            focusDictionary(cadburyValue, dataHeader?.definition, dataHeader?.example, [dataHeader?.synonyms?.[0], dataHeader?.synonyms?.[1], dataHeader?.synonyms?.[2]]);
+            // console.log(data);
         })
     }
 
@@ -119,9 +119,6 @@ cadbury.addEventListener("keyup", (e) => {
 });
 
 function focusDictionary(key, definition, example, synonyms) {
-    if (synonyms) {
-        console.log("ssss");
-    }
     if (key == null || definition == null) {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
