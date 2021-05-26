@@ -272,6 +272,7 @@ h3 {
 .eval_err {
     font-size: 22px !important;
     color: white !important;
+    font-family: 'Poppins', sans-serif;
 }
 
 .meaning_example {

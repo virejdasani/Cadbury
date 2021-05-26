@@ -147,8 +147,8 @@ function focusDictionary(key, definition, example, synonyms) {
             <li>
                 <h3 class="term">"${key}"</h3>
                 <span class="meaning">${definition}</span>
-                <small class="meaning_example">Example - ${example}</small>
-                <small class="meaning_example">Synonyms - ${synonyms[0]}, ${synonyms[1]}, ${synonyms[2]}</small>
+                <small class="meaning_example"><b>Example</b> - ${example}</small>
+                <small class="meaning_example"><b>Synonyms</b> - ${synonyms[0]}, ${synonyms[1]}, ${synonyms[2]}</small>
             </li>
             `;
         } else if (example && synonyms[0] == undefined){
