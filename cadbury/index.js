@@ -3,6 +3,8 @@ const cadbury = document.querySelector("#searchbox");
 const resultsDiv = document.getElementsByClassName("results")[0];
 const browserResults = document.getElementsByClassName("browser__results")[0];
 const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
+const browserHeader = document.getElementsByClassName("browser_header")[0];
+const resultsDivider = document.getElementsByClassName('results_divider')[0];
 
 // Making the results div disappear
 resultsDiv.style.display = "none";
@@ -46,6 +48,8 @@ cadbury.addEventListener("keyup", (e) => {
     }
 
     // Focusing on the 'no results found' flash
+    // browserResults.style.display = "none";
+    // browserHeader.style.display = "none";
     browserResults.innerHTML =
         `
     <span class="error">No results found for "${cadbury.value}"</span>
@@ -183,10 +187,11 @@ function focusBrowser(data, numeric) {
 
             setTimeout(() => {
                 if (!data.success) {
-                    browserResults.innerHTML =
-                        `
-                    <span class="error">No results found for "${cadbury.value}"</span>
-                    `;
+                    // browserResults.innerHTML =
+                    //     `
+                    // <span class="error">No results found for "${cadbury.value}"</span>
+                    // `;
+                    browserResults.style.display = "none"
                 } else {
                     browserResults.innerHTML =
                         `
