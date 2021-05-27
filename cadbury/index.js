@@ -459,7 +459,12 @@ function getHelp() {
     browserResults.innerHTML = 
     `
     <div class="helper">
-        <li>help statements like this</li>
+        <span class="helper">Search for words by just starting to type</span>
+        <span class="helper">Search for the weather by typing "weather"</span>
+        <span class="helper">Use ":google" or ":search" to directly search the browser</span>
+        <span class="helper">Use ":amazon" to directly search Amazon and ":wiki" for WikiPedia</span>
+        <span class="helper">To directly open urls, type ":open" followed by the url</span>
+        <span class="helper">To get to know more about Cadbury and its developers, type "Cadbury"</span>
     </div>
     `
     browserResults.style.display = "block";

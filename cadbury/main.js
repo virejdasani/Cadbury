@@ -93,15 +93,17 @@ const launchCadbury = () => {
     window.setSize(800, 500);
     setTimeout(() => {
         window.show();
-    }, 180)
+    }, 280)
 }
 
 const destroyCadbury = () => {
     if (process.platform == "darwin") {
         app.hide();
         window.hide();
+        window.reload();
     } else {
         window.minimize();
         window.hide();
+        window.reload();
     }
 }
