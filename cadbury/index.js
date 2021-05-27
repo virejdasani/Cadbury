@@ -477,6 +477,7 @@ function openUrl(url) {
 }
 
 function getHelp() {
+    // TODO - change youtube to something else
     browserResults.innerHTML = 
     `
     <div class="helper">
