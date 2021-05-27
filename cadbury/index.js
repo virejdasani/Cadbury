@@ -1,3 +1,5 @@
+var appVersion = "1.0.0"
+
 // DOM Querying
 const cadbury = document.querySelector("#searchbox");
 const resultsDiv = document.getElementsByClassName("results")[0];
@@ -8,6 +10,23 @@ const resultsDivider = document.getElementsByClassName('results_divider')[0];
 
 // Making the results div disappear
 resultsDiv.style.display = "none";
+
+// Check if an update is available
+// For app update, if an update is available, the updateAvailable in the RemoteJSON repo will be updated to yes. That will result in the code below being executed
+fetch('https://virejdasani.github.io/RemoteJSON/Cadbury/index.html')
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+        // If update is available, and this version is not the latest one
+        if (data.updateAvailable == "yes" && data.latestVersion != appVersion) {
+            focusBrowser(data)
+        }
+    })
+    .catch((err) => {
+        // console.log(err)
+    })
+
 
 // Checking every time a key is pressed
 cadbury.addEventListener("keyup", (e) => {
@@ -271,6 +290,21 @@ function focusBrowser(data, numeric) {
             browserResults.style.display = "block"
             focusDictionary(null, null);
         };
+
+        if (data.updateAvailable == "yes" && data.latestVersion != appVersion) {
+            showGlobalResults()
+            hideDictionaryResults()
+
+            browserResults.innerHTML =
+                `
+                <span class="error eval_err">${data.updateText}</span>
+                <span class="error eval_err">Download it <a href="${data.updateURL}" target="_blank">Here</a></span>
+            `;
+            // console.log(browserResults);
+            resultsDiv.style.display = "block"
+            browserResults.style.display = "block"
+            focusDictionary(null, null);
+        }
     }
 }
 
