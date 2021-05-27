@@ -289,3 +289,22 @@ h3 {
     margin-top: 10px;
     /* margin-bottom: 5px; */
 }
+
+.helper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    width: 90%;
+}
+
+.helper span {
+    width: 90% !important;
+    border-radius: 7px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-align: center;
+    padding: 5px;
+    background-color: rgb(81, 81, 81);
+    color: rgb(184, 184, 184);
+}
