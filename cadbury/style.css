@@ -212,6 +212,10 @@ h3 {
     width: 60px;
 }
 
+.helper {
+    text-align: center;
+}
+
 ::-webkit-scrollbar {
     background-color: transparent;
 }

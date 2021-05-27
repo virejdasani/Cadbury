@@ -30,7 +30,6 @@ cadbury.addEventListener("keyup", (e) => {
 
             // Another free dictionary API: https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
 
-            // Or use if === value
             if (key == cadbury.value) {
                 focusDictionary(key, definitions[key])
             }
@@ -459,7 +458,8 @@ function getHelp() {
     browserResults.innerHTML = 
     `
     <div class="helper">
-        <li>help statements like this</li>
+        <li>Find out what Cadbury is capable of by watching the short video below!</li>
+        <li><a href="https://youtube.com" target="_blank">What can Cadbury do?</a></li>
     </div>
     `
     browserResults.style.display = "block";
