@@ -69,6 +69,7 @@ input {
     color: white;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 9px 18px, rgba(0, 0, 0, 0.22) 0px 7.5px 6px;
     padding-bottom: 30px;
+    padding-top: 15px;
     animation: easier 0.5s;
     max-height: 340px;
     overflow-y: scroll !important;
@@ -84,7 +85,7 @@ hr {
 }
 
 .results h2 {
-    margin-top: 10px !important;
+    /* margin-top: 10px !important; */
     margin-bottom: 10px !important;
     color: rgb(187, 187, 187);
 }
@@ -277,6 +278,7 @@ h3 {
     font-size: 22px !important;
     color: white !important;
     font-family: 'Poppins', sans-serif;
+    margin-top: 10px !important;
 }
 
 .meaning_example {

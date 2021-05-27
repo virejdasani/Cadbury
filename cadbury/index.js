@@ -376,7 +376,7 @@ function focusCommand(command, value) {
 
             browserResults.innerHTML =
                 `
-            <span class="error eval_err">Press Enter To Open https://${value}</span>
+            <span class="error eval_err" style="margin-top: 20px;">Press Enter To Open https://${value}</span>
             `;
         }
         // if (https://google.com), then keep it (https://google.com)
@@ -395,7 +395,7 @@ function focusCommand(command, value) {
     } else {
         browserResults.innerHTML =
         `
-    <span class="error eval_err">Popular Commands:</span>
+    <span class="error eval_err" style="margin-top: 20px;">Popular Commands:</span>
     <div class="helper">
         <li>:google</li>
         <li>:wikipedia</li>
