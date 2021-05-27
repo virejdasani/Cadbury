@@ -18,41 +18,38 @@ cadbury.addEventListener("keyup", (e) => {
     if (e.code === "Enter") {
         enterPressed()
     }
+// if the user is offline 
+if (!navigator.onLine) {
+    // Mapping through the JSON dictionary
+    Object.keys(definitions).map((key, index) => {
+        // Another free dictionary API: https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
 
-    // if the user is offline 
-    if (!navigator.onLine) {
-        // Mapping through the JSON dictionary
-        Object.keys(definitions).map((key, index) => {
-            // Either use if includes 
-            // if (key.includes(cadbury.value)) {
-            //     focusDictionary(key, definitions[key])
-            // }
-
-            // Another free dictionary API: https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
-
-            if (key == cadbury.value) {
-                focusDictionary(key, definitions[key])
-            }
-        });
-        // if user is online
-    } else {
+        if (key == cadbury.value) {
+            focusDictionary(key, definitions[key])
+        }
+    });
+    // if user is online
+} else {
         fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cadbury.value}`)
-        .then((res) => {
-            return res.json();
-        }).then(data => {
-            let dataHeader = data[0]?.meanings[0]?.definitions[0]
-            focusDictionary(cadburyValue, dataHeader?.definition, dataHeader?.example, [dataHeader?.synonyms?.[0], dataHeader?.synonyms?.[1], dataHeader?.synonyms?.[2]]);
-            // console.log(data);
-        })
-    }
+            .then((res) => {
+                return res.json();
+            }).then(data => {
+                let dataHeader = data[0]?.meanings[0]?.definitions[0]
+                focusDictionary(cadburyValue, dataHeader?.definition, dataHeader?.example, [dataHeader?.synonyms?.[0], dataHeader?.synonyms?.[1], dataHeader?.synonyms?.[2]]);
+                // console.log(data);
+            })
+}
 
-    // Focusing on the 'no results found' flash
-    // browserResults.style.display = "none";
-    // browserHeader.style.display = "none";
     browserResults.innerHTML =
         `
-    <span class="error">No results found for "${cadbury.value}"</span>
+    <span id="noResults" class="error">No results found for "${cadbury.value}"</span>
     `
+
+    // This is to not display "No results found" when no results are found 
+    if (document.getElementById("noResults").innerHTML.includes("No results")) {
+        document.getElementById("noResults").style.display = "none";
+        hideGlobalResults()
+    }
 
     // Making the results div disappear again
     if (cadbury.value == "") {
@@ -111,6 +108,8 @@ cadbury.addEventListener("keyup", (e) => {
         if (cadbury.value.includes(code)) {
             // console.log("number found");
             try {
+                showGlobalResults()
+                hideDictionaryResults()
                 // Calculating the value
                 let expressionAnswer = eval(cadbury.value);
                 focusBrowser(expressionAnswer, numeric = true);
@@ -122,6 +121,8 @@ cadbury.addEventListener("keyup", (e) => {
 });
 
 function focusDictionary(key, definition, example, synonyms) {
+    showDictionaryResults()
+    hideGlobalResults()
     if (key == null || definition == null) {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
@@ -130,6 +131,7 @@ function focusDictionary(key, definition, example, synonyms) {
             <span class="no-def-error">No Results Found</span>
         </li>
         `
+        hideDictionaryResults()
     } else {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
@@ -179,6 +181,8 @@ function focusBrowser(data, numeric) {
         `
     } else {
         if (cadbury.value.toLowerCase() == "weather") {
+            showGlobalResults()
+
             browserResults.innerHTML =
                 `
             <img class="loader" src="./assets/loading_spinner.gif">
@@ -207,6 +211,7 @@ function focusBrowser(data, numeric) {
             }, 1000);
 
         } else if (cadbury.value == "news") {
+            showGlobalResults()
 
             // console.log(data);
             browserResults.innerHTML =
@@ -254,6 +259,9 @@ function focusBrowser(data, numeric) {
         }
 
         if (numeric) {
+            showGlobalResults()
+            hideDictionaryResults()
+
             browserResults.innerHTML =
                 `
         <span class="error eval_err">${cadbury.value} = ${data}</span>
@@ -310,6 +318,9 @@ function getLocation(data) {
 
 // This shows the command in the browserResults
 function focusCommand(command, value) {
+    showGlobalResults()
+    hideDictionaryResults()
+
     if (command.toLowerCase() == "google" || command.toLowerCase() == "search") {
         browserResults.innerHTML =
             `
@@ -319,7 +330,7 @@ function focusCommand(command, value) {
         browserResults.style.display = "block"
         focusDictionary(null, null);
     }
-    if (command.toLowerCase() == "wiki" || command.toLowerCase() == "wikipedia") {
+    else if (command.toLowerCase() == "wiki" || command.toLowerCase() == "wikipedia") {
         browserResults.innerHTML =
             `
         <span class="error eval_err">Press Enter To Search Wikipedia For "${value}"</span>
@@ -328,7 +339,7 @@ function focusCommand(command, value) {
         browserResults.style.display = "block"
         focusDictionary(null, null);
     }
-    if (command.toLowerCase() == "amazon") {
+    else if (command.toLowerCase() == "amazon") {
         browserResults.innerHTML =
             `
         <span class="error eval_err">Press Enter To Search Amazon For "${value}"</span>
@@ -338,7 +349,7 @@ function focusCommand(command, value) {
         focusDictionary(null, null);
     }
 
-    if (command.toLowerCase() == "open") {
+    else if (command.toLowerCase() == "open") {
 
         // if (google), then make it (https://google.com)
         if (!cadbury.value.includes("http") && !cadbury.value.includes(".")) {
@@ -381,6 +392,17 @@ function focusCommand(command, value) {
         resultsDiv.style.display = "block"
         browserResults.style.display = "block"
         focusDictionary(null, null);
+    } else {
+        browserResults.innerHTML =
+        `
+    <span class="error eval_err">Popular Commands:</span>
+    <div class="helper">
+        <li>:google</li>
+        <li>:wikipedia</li>
+        <li>:amazon</li>
+        <li>:open</li>
+    </div>
+    `;
     }
 }
 
@@ -462,7 +484,7 @@ function getHelp() {
         <li><a href="https://youtube.com" target="_blank">What can Cadbury do?</a></li>
         </br>
         <li>These are some of the things Cadbury can do:</li>
-        <span class="helper">Search for words by just starting to type</span>
+        <span class="helper">Search for word definitions by typing the word</span>
         <span class="helper">Search for the weather by typing "weather"</span>
         <span class="helper">Use ":google" or ":search" to directly search the browser</span>
         <span class="helper">Use ":amazon" to directly search Amazon and ":wiki" for WikiPedia</span>
@@ -471,4 +493,26 @@ function getHelp() {
     </div>
     `
     browserResults.style.display = "block";
+}
+
+function hideGlobalResults() {
+    document.getElementById("globalResults").style.display = "none";
+    document.getElementById("globalResultsDivider").style.display = "none";
+}
+
+function showGlobalResults() {
+    document.getElementById("globalResults").style.display = "block";
+    document.getElementById("globalResultsDivider").style.display = "block";
+}
+
+function hideDictionaryResults() {
+    document.getElementById("globalResultsDivider").style.display = "none";
+    document.getElementById("meanings").style.display = "none";
+    document.getElementById("dictionaryText").style.display = "none";
+}
+
+function showDictionaryResults() {
+    document.getElementById("globalResultsDivider").style.display = "block";
+    document.getElementById("meanings").style.display = "block";
+    document.getElementById("dictionaryText").style.display = "block";
 }

@@ -13,13 +13,13 @@
         <input id="searchbox" type="text" placeholder="Cadbury Search" autofocus spellcheck="false">
         
         <div class="results">
-            <h2 class="browser_header">Global Results</h2>
-            <div class="browser__results">
+            <h2 id="globalResults" class="browser_header">Global Results</h2>
+            <div id="browserResults" class="browser__results">
                 <!-- <span class="error">Searching Browser...</span> -->
             </div>
-            <hr class="results_divider">
-            <h2 onclick="getLocation()">Dictionary</h2>
-            <div class="quick__meanings">
+            <hr id="globalResultsDivider" class="results_divider">
+            <h2 id="dictionaryText" onclick="getLocation()">Dictionary</h2>
+            <div id="meanings" class="quick__meanings">
 
             </div>
             <!-- <hr> -->
