@@ -14,3 +14,8 @@
 ![](https://user-images.githubusercontent.com/70736942/120073025-3887c400-c0b4-11eb-8e3b-ece942c43827.png)
 
 #### Find Out More About Cadbury On [Our Website](http://cadbury.netlify.com/)
+
+## Is Cadbury missing any functionality?
+- Go to the issues tab and tell us how we can make Cadbury better
+OR
+- For the repo, add some functionality / fix a bug and make a pull request!
