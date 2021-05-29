@@ -17,5 +17,7 @@
 
 ## Is Cadbury missing any functionality?
 - Go to the issues tab and tell us how we can make Cadbury better
+
 OR
+
 - For the repo, add some functionality / fix a bug and make a pull request!
