@@ -19,7 +19,7 @@ app.on('window-all-closed', () => {
 
 const initializeTray = () => {
     if (process.platform === "darwin" || process.platform === "linux") {
-        tray = new Tray(path.join(assetsDirectory, 'tray_icon_mac.png'));
+        tray = new Tray(path.join(assetsDirectory, 'tray_icon_mac.ico'));
     } else {
         tray = new Tray(path.join(assetsDirectory, 'tray_icon.png'));
     }
