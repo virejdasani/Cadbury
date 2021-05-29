@@ -10,7 +10,7 @@ body {
     align-items: center;
     border-radius: 10px;
     padding: 5px;
-    /* animation: none; */
+    animation: none;
     /* padding-top: 10px; */
     /* overflow-y: hidden; */
 }
@@ -37,6 +37,16 @@ body {
     }
 }
 
+@keyframes harden {
+    from {
+        display: none;
+    }
+
+    to {
+        display: block;
+    }
+}
+
 input {
     display: block;
     margin: auto;
@@ -50,7 +60,7 @@ input {
     border: none;
     text-indent: 10px;
     font-size: 19px;
-    /* animation: easier 0.5s; */
+    animation: harden 0.5s;
     background-image: url("./assets/search_icon.png");
     background-size: 25px 25px;
     background-repeat: no-repeat;

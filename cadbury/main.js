@@ -18,7 +18,11 @@ app.on('window-all-closed', () => {
 });
 
 const initializeTray = () => {
-    tray = new Tray(path.join(assetsDirectory, 'tray_icon.png'))
+    if (process.platform === "darwin" || process.platform === "linux") {
+        tray = new Tray(path.join(assetsDirectory, 'tray_icon_mac.png'));
+    } else {
+        tray = new Tray(path.join(assetsDirectory, 'tray_icon.png'));
+    }
     tray.on('right-click', toggleCadburyVisibility)
     tray.on('double-click', toggleCadburyVisibility)
     tray.on('click', function (event) {
@@ -32,11 +36,13 @@ const initializeApp = () => {
         height: 500,
         width: 800,
         transparent: true,
-        thickFrame: false,
-        hasShadow: true,
-        alwaysOnTop: true,
+        // thickFrame: false,
+        // hasShadow: true,
+        // show: false,
+        // alwaysOnTop: true,
         fullscreenable: false,
         frame: false,
+        resizable: false,
         webPreferences: {
             nodeIntegration: true,
             backgroundThrottling: false,
