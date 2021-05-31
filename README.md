@@ -1,6 +1,6 @@
 # Cadbury
 ![image](https://user-images.githubusercontent.com/70736942/120207774-74ed2880-c24a-11eb-847d-206a40dc9351.png)
-### The ultimate quick search tool
+## The Ultimate Quick Search Tool
 
 ### What can Cadbury do?
 - Instantly look up definitions
