@@ -1,4 +1,5 @@
 # Cadbury
+![image](https://user-images.githubusercontent.com/70736942/120204142-1d4cbe00-c246-11eb-8b5d-d04cc999e67a.png)
 ### The ultimate quick search tool
 
 ### What can Cadbury do?
