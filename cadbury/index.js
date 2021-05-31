@@ -147,10 +147,10 @@ function focusDictionary(key, definition, example, synonyms) {
         quickMeanings.innerHTML =
             `
         <li>
-            <span class="no-def-error">No Results Found</span>
+            <span class="no-def-error">No Results Found For "${cadbury.value}"</span>
         </li>
         `
-        hideDictionaryResults()
+        // hideDictionaryResults()
     } else {
         resultsDiv.style.display = "block";
         quickMeanings.innerHTML =
