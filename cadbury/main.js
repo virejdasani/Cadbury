@@ -18,7 +18,11 @@ app.on('window-all-closed', () => {
 });
 
 const initializeTray = () => {
-    tray = new Tray(path.join(assetsDirectory, 'tray_icon.png'));
+    if (process.platform == "win32") {
+            tray = new Tray(path.join(assetsDirectory, 'tray_icon_win.png'));
+    } else {
+        tray = new Tray(path.join(assetsDirectory, 'tray_icon.png'));
+    }
     
     tray.on('right-click', toggleCadburyVisibility)
     tray.on('double-click', toggleCadburyVisibility)
