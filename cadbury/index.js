@@ -8,6 +8,9 @@ const quickMeanings = document.getElementsByClassName("quick__meanings")[0];
 const browserHeader = document.getElementsByClassName("browser_header")[0];
 const resultsDivider = document.getElementsByClassName('results_divider')[0];
 
+const contextMenu = document.getElementById("context-menu");
+const mainWindow = document.getElementsByClassName("main__window")[0];
+
 // Making the results div disappear
 resultsDiv.style.display = "none";
 
@@ -556,3 +559,14 @@ function showDictionaryResults() {
     document.getElementById("meanings").style.display = "block";
     document.getElementById("dictionaryText").style.display = "block";
 }
+
+mainWindow.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    contextMenu.style.display = "flex";
+    contextMenu.style.top = e.y + "px";
+    contextMenu.style.left = e.x + "px";
+});
+
+mainWindow.addEventListener("click", () => {
+    contextMenu.style.display = "none";
+})

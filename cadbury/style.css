@@ -320,3 +320,60 @@ h3 {
     background-color: rgb(81, 81, 81);
     color: rgb(184, 184, 184);
 }
+
+@keyframes context {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.context-menu {
+    overflow: hidden;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    /* background-color: #222222; */
+    background-color: rgba(47, 47, 47, 0.828);
+    backdrop-filter: blur(5px);
+    padding: 2px;
+    border-radius: 5px;
+    /* border: 1px solid rgb(0, 0, 0); */
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 9px 18px, rgba(0, 0, 0, 0.22) 0px 7.5px 6px;
+    color: white !important;
+    animation: context 0.2s;
+}
+
+.context-a {
+    color: white !important;
+    margin: 3px;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: 13.5px;
+    transition: 200ms ease-in-out;
+    /* margin-right: 5px; */
+}
+
+.context-a:hover {
+    background-color: rgb(0, 112, 224);
+    transition: 200ms ease-in-out;
+}
+
+.context-menu hr {
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+    border: none;
+    background-color: #484848;
+    height: 1px;
+}
+
+.context-a i {
+    margin-left: 2px;
+    margin-right: 2px;
+}
