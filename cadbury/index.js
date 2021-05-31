@@ -140,7 +140,12 @@ if (!navigator.onLine) {
 });
 
 function focusDictionary(key, definition, example, synonyms) {
-    showDictionaryResults()
+    showDictionaryResults();
+
+    if (cadbury.value.includes(":")) {
+        hideDictionaryResults();
+    }
+
     hideGlobalResults()
     if (key == null || definition == null) {
         resultsDiv.style.display = "block";
@@ -352,8 +357,8 @@ function getLocation(data) {
 
 // This shows the command in the browserResults
 function focusCommand(command, value) {
-    showGlobalResults()
-    hideDictionaryResults()
+    showGlobalResults();
+    hideDictionaryResults();
 
     if (command.toLowerCase() == "google" || command.toLowerCase() == "search") {
         browserResults.innerHTML =
