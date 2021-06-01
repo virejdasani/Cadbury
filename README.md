@@ -1,3 +1,5 @@
+[![Github All Releases](https://img.shields.io/github/downloads/virejdasani/Cadbury/total.svg)]()
+
 # Cadbury
 ### The Next Generation Search Tool
 ![image](https://user-images.githubusercontent.com/70736942/120207774-74ed2880-c24a-11eb-847d-206a40dc9351.png)
