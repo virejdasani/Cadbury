@@ -10,7 +10,7 @@
     "pack-linux-x64": "electron-packager . Cadbury --platform=linux --arch=x64 --icon=assets/AppIcons/app_icon.png"
   },
   "keywords": [],
-  "author": "",
+  "author": "Arnav Jain, Virej Dasani",
   "license": "MIT",
   "dependencies": {
     "electron": "^12.0.9",
