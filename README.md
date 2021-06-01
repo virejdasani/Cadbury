@@ -1,4 +1,9 @@
 [![Github All Releases](https://img.shields.io/github/downloads/virejdasani/Cadbury/total.svg)]()
+[![GitHub license](https://img.shields.io/github/license/virejdasani/Cadbury)](https://github.com/virejdasani/Cadbury/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/virejdasani/Cadbury)](https://GitHub.com/virejdasani/Cadbury/releases/)
+[![GitHub contributors](https://img.shields.io/github/contributors/virejdasani/Cadbury)](https://GitHub.com/virejdasani/Cadbury/graphs/contributors/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/virejdasani/Cadbury/)
 
 # Cadbury
 ### The Next Generation Search Tool
