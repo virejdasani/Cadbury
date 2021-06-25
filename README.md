@@ -12,7 +12,7 @@
 
 ### Here's What Cadbury Can do 👇
 - Instantly look up definitions
-- Perform matheatical calculations
+- Perform mathematical calculations
 - Show you quick news snippet
 - Tell you the weather
 - Allow you to instantly look something up on Google or WikiPedia
