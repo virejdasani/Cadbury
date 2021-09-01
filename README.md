@@ -32,5 +32,5 @@ OR
 - For the repo, add some functionality / fix a bug and make a pull request!
 
 
-### TODO!
-[image](https://user-images.githubusercontent.com/67495678/131715538-e9cfe446-3958-4e24-94e7-eddc9add8696.png)
+### TODO
+![image](https://user-images.githubusercontent.com/67495678/131715538-e9cfe446-3958-4e24-94e7-eddc9add8696.png)
