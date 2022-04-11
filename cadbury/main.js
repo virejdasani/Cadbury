@@ -49,6 +49,7 @@ const initializeApp = () => {
     // show: false,
     // alwaysOnTop: true,
     fullscreenable: false,
+    vibrancy: 'dark',
     frame: false,
     resizable: false,
     webPreferences: {
